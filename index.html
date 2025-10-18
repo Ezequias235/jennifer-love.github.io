@@ -4,20 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Para ti, Jennifer❤️</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="Jennifer.png">
 
   <style>
     :root{ --bg:#fff6fb; --accent:#ff66aa; --text:#4b2a2a }
     *{box-sizing:border-box;margin:0;padding:0}
+
     body{
-      min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
       background:radial-gradient(circle at top,#fff0f8,#ffd6e8,#ffe6f6);
-      font-family:'Poppins',sans-serif;color:var(--text);overflow:hidden;position:relative;
+      font-family:'Poppins',sans-serif;
+      color:var(--text);
+      overflow-y:auto;
+      position:relative;
+      padding:50px 10px;
     }
 
-    h1{font-size:50px;text-shadow:0 0 10px rgba(255,0,120,0.4);margin-bottom:20px;animation:fadeIn 2s ease-in-out;}
+    h1{
+      font-size:50px;
+      text-align:center;
+      text-shadow:0 0 10px rgba(255,0,120,0.4);
+      margin-bottom:20px;
+      animation:fadeIn 2s ease-in-out;
+    }
 
     .portrait{
       width:180px;height:180px;
@@ -26,33 +39,53 @@
       box-shadow:0 10px 40px rgba(255,0,150,0.4);
       border:5px solid white;
       animation:floatImg 5s ease-in-out infinite;
+      margin-bottom:30px;
     }
 
     @keyframes floatImg{0%{transform:translateY(0);}50%{transform:translateY(-15px);}100%{transform:translateY(0);}}
     @keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
 
-    .sparkle{position:absolute;width:4px;height:4px;background:white;border-radius:50%;opacity:0.8;animation:spark 3s linear infinite;}
-    @keyframes spark{0%{transform:translateY(0) scale(1);}50%{opacity:1;transform:translateY(-60px) scale(1.5);}100%{opacity:0;transform:translateY(-120px) scale(0.5);}}
+    .sparkle{
+      position:absolute;width:4px;height:4px;background:white;border-radius:50%;opacity:0.8;
+      animation:spark 3s linear infinite;
+    }
+    @keyframes spark{0%{transform:translateY(0) scale(1);}50%{opacity:1;transform:translateY(-60px) scale(1.5);}100%{transform:translateY(-120px) scale(0.5);}}
 
     .textblock{
-      margin-top:40px;
+      margin-top:20px;
       background:rgba(255,255,255,0.75);
-      padding:25px;
+      padding:20px;
       border-radius:25px;
-      max-width:700px;
+      width:100%;
+      max-width:400px;
       text-align:center;
       backdrop-filter:blur(10px);
       box-shadow:0 8px 25px rgba(0,0,0,0.15);
       animation:fadeIn 3s ease-in-out;
     }
-    .textblock h2{color:var(--accent);font-size:28px;margin-bottom:15px;}
-    .textblock p{font-size:18px;line-height:1.7;color:#5a3a3a;}
+    .textblock h2{color:var(--accent);font-size:24px;margin-bottom:15px;}
+    .textblock p{font-size:16px;line-height:1.6;color:#5a3a3a;}
 
-    footer{margin-top:50px;color:#a35a6a;font-size:15px;animation:fadeIn 4s ease-in-out;}
+    footer{
+      margin-top:40px;
+      color:#a35a6a;
+      font-size:14px;
+      animation:fadeIn 4s ease-in-out;
+      text-align:center;
+    }
 
     .heart-bg{position:absolute;inset:0;overflow:hidden;z-index:-1;}
-    .heart{position:absolute;color:#ffcce0;font-size:30px;animation:floatHeart 10s infinite ease-in-out;opacity:0.7;}
+    .heart{position:absolute;color:#ffcce0;font-size:24px;animation:floatHeart 10s infinite ease-in-out;opacity:0.7;}
     @keyframes floatHeart{0%{transform:translateY(100vh) scale(0.8);}50%{opacity:1;}100%{transform:translateY(-10vh) scale(1.2);opacity:0;}}
+
+    /* Adaptación para móviles */
+    @media(max-width:480px){
+      h1{font-size:36px;}
+      .portrait{width:140px;height:140px;margin-bottom:20px;}
+      .textblock h2{font-size:20px;}
+      .textblock p{font-size:14px;}
+      .heart{font-size:20px;}
+    }
   </style>
 </head>
 <body>
@@ -81,7 +114,6 @@
   <footer>— Ezequias 💖 —</footer>
 
   <script>
-    // Efecto de destellos flotantes
     const createSparkle = () => {
       const spark = document.createElement('div');
       spark.classList.add('sparkle');
@@ -93,7 +125,6 @@
     };
     setInterval(createSparkle, 200);
 
-    // Animación interactiva de la imagen
     const portrait = document.getElementById('portrait');
     document.addEventListener('mousemove', (e) => {
       const x = (window.innerWidth / 2 - e.pageX) / 40;
