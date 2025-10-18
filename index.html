@@ -16,47 +16,56 @@
       color:var(--text);
       background:radial-gradient(circle at top,#fff0f8,#ffd6e8,#ffe6f6);
       overflow-y:auto;
-      position:relative;
-      padding:0;
       display:flex;
       justify-content:center;
+      align-items:center;
     }
 
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(255, 240, 248,0.95);
+    /* Cuadro inicial tipo carta */
+    .card-start{
+      width:260px;
+      background:rgba(255,255,255,0.9);
+      border-radius:20px;
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      z-index:100;
       text-align:center;
-      padding:20px;
+      box-shadow:0 8px 25px rgba(255,102,170,0.4);
+      cursor:pointer;
+      padding:15px 20px;
+      max-height:350px;
+      transition:opacity 0.5s ease;
     }
 
-    .overlay h1{
-      font-size:40px;
-      margin-bottom:30px;
+    .card-start h2{
       color:var(--accent);
-      text-shadow:0 0 10px rgba(255,0,120,0.4);
+      font-size:22px;
+      margin-bottom:10px;
+    }
+    .card-start p{
+      font-size:16px;
+      color:#5a3a3a;
+      margin-bottom:10px;
     }
 
-    .btn{
-      padding:15px 30px;
-      font-size:18px;
-      border:none;
-      border-radius:25px;
+    .card-start .btn, .btn-regresar{
+      display:block;
+      width:160px;
+      padding:8px 0;
+      margin:5px 0;
       background:var(--accent);
       color:white;
+      border:none;
+      border-radius:12px;
       cursor:pointer;
-      box-shadow:0 5px 15px rgba(0,0,0,0.2);
-      transition:transform 0.2s ease, box-shadow 0.2s ease;
+      font-weight:bold;
+      transition:0.2s;
+      text-decoration:none;
+      text-align:center;
     }
-
-    .btn:hover{
-      transform:scale(1.05);
-      box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    .card-start .btn:hover, .btn-regresar:hover{
+      background:#ff3388;
     }
 
     .container{
@@ -64,9 +73,17 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      padding:50px 10px;
+      padding:30px 10px;
       max-width:500px;
       width:100%;
+      display:none;
+      opacity:0;
+      transition:opacity 0.5s ease;
+    }
+
+    .container.show{
+      display:flex;
+      opacity:1;
     }
 
     h1.main-title{
@@ -74,7 +91,6 @@
       text-align:center;
       text-shadow:0 0 10px rgba(255,0,120,0.4);
       margin-bottom:30px;
-      animation:fadeIn 2s ease-in-out;
     }
 
     .portrait{
@@ -83,12 +99,8 @@
       background:url('Jennifer.png') center/cover no-repeat;
       box-shadow:0 10px 40px rgba(255,0,150,0.4);
       border:5px solid white;
-      animation:floatImg 5s ease-in-out infinite;
       margin-bottom:30px;
     }
-
-    @keyframes floatImg{0%{transform:translateY(0);}50%{transform:translateY(-15px);}100%{transform:translateY(0);}}
-    @keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
 
     .sparkle{
       position:absolute;width:4px;height:4px;background:white;border-radius:50%;opacity:0.8;
@@ -104,23 +116,22 @@
       text-align:center;
       backdrop-filter:blur(10px);
       box-shadow:0 8px 25px rgba(0,0,0,0.15);
-      animation:fadeIn 1.5s ease-in-out;
-      margin-bottom:30px;
+      margin-bottom:20px;
     }
     .textblock h2{color:var(--accent);font-size:24px;margin-bottom:15px;}
     .textblock p{font-size:16px;line-height:1.6;color:#5a3a3a;}
 
     footer{
-      margin-top:20px;
+      margin-top:10px;
       color:#a35a6a;
       font-size:14px;
       text-align:center;
-      margin-bottom:50px;
+      margin-bottom:30px;
     }
 
+    /* Fondo corazones estable */
     .heart-bg{position:absolute;inset:0;overflow:hidden;z-index:-1;}
-    .heart{position:absolute;color:#ffcce0;font-size:24px;animation:floatHeart 10s infinite ease-in-out;opacity:0.7;}
-    @keyframes floatHeart{0%{transform:translateY(100vh) scale(0.8);}50%{opacity:1;}100%{transform:translateY(-10vh) scale(1.2);opacity:0;}}
+    .heart{position:absolute;color:#ffcce0;font-size:24px;opacity:0.7;}
 
     /* Adaptación para móviles */
     @media(max-width:480px){
@@ -129,27 +140,34 @@
       .textblock h2{font-size:20px;}
       .textblock p{font-size:14px;}
       .heart{font-size:20px;}
+      .card-start{width:200px;padding:15px;max-height:300px;}
+      .card-start h2{font-size:18px;}
+      .card-start p{font-size:14px;}
+      .card-start .btn{width:140px;}
+      .btn-regresar{width:140px;}
     }
   </style>
 </head>
 <body>
   <!-- Fondo de corazones -->
   <div class="heart-bg">
-    <div class="heart" style="left:1%;animation-delay:0s;">💖</div>
-    <div class="heart" style="left:25%;animation-delay:2s;">💞</div>
-    <div class="heart" style="left:50%;animation-delay:4s;">💘</div>
-    <div class="heart" style="left:70%;animation-delay:6s;">💕</div>
-    <div class="heart" style="left:90%;animation-delay:8s;">💗</div>
+    <div class="heart" style="left:15%;">💖</div>
+    <div class="heart" style="left:50%;">💞</div>
+    <div class="heart" style="left:80%;">💘</div>
   </div>
 
-  <!-- Pantalla inicial -->
-  <div class="overlay" id="overlay">
-    <h1>Para ti, Jennifer ❤️</h1>
-    <button class="btn" id="readBtn">Leer Carta</button>
+  <!-- Cuadro inicial tipo carta -->
+  <div class="card-start" id="cardStart">
+    <h2>📜 Carta para ti 📜</h2>
+    <p>Haz clic para descubrirla. ❤️</p>
+    <button id="btnCarta" class="btn">Leer Carta</button>
+	<h2>🎶 Te la dedico 🎶</h2>
+    <a href="https://www.youtube.com/watch?v=rBLLbgD0FsM&list=RDrBLLbgD0FsM&start_radio=1" target="_blank" class="btn">Escuchar Música</a>
+	<p>Haz Clic para escucharla. 🎶</p>
   </div>
 
   <!-- Contenedor central -->
-  <div class="container">
+  <div class="container" id="container">
     <h1 class="main-title">Para ti, Jennifer.</h1>
 
     <div class="portrait" id="portrait"></div>
@@ -164,42 +182,48 @@
       <p>Aun cuando no estás cerca, mi corazón te siente… hoy, mañana y siempre. ❤️</p>
       <p>No sé cómo demostrarte que de verdad le importas mucho a mi corazón…</p>
 
-      <p style="margin-top:30px;font-weight:bold;">Att: Ezequías Martínez</p>
-      <div style="margin-top:15px;width:120px;height:120px;border-radius:50%;background:url('tu_foto.png') center/cover no-repeat;margin-left:auto;margin-right:auto;box-shadow:0 5px 15px rgba(0,0,0,0.2);"></div>
+      <p style="margin-top:20px;font-weight:bold;">Att: Ezequías Martínez</p>
+      <div style="margin-top:15px;width:120px;height:120px;border-radius:50%;background:url('Ezequias.png') center/cover no-repeat;margin-left:auto;margin-right:auto;box-shadow:0 5px 15px rgba(0,0,0,0.2);"></div>
+
+      <button id="btnRegresar" class="btn-regresar">Regresar</button>
     </div>
 
     <footer>— Ezequias 💖 —</footer>
   </div>
 
   <script>
-    // Mostrar carta al presionar el botón
-    const overlay = document.getElementById('overlay');
-    document.getElementById('readBtn').addEventListener('click', () => {
-      overlay.style.display = 'none';
+    const cardStart = document.getElementById('cardStart');
+    const container = document.getElementById('container');
+    const btnCarta = document.getElementById('btnCarta');
+    const btnRegresar = document.getElementById('btnRegresar');
+
+    btnCarta.addEventListener('click', () => {
+      cardStart.style.opacity = 0;
+      setTimeout(()=>{
+        cardStart.style.display = 'none';
+        container.classList.add('show');
+      }, 500);
     });
 
-    // Efecto de destellos flotantes
+    btnRegresar.addEventListener('click', () => {
+      container.classList.remove('show');
+      setTimeout(()=>{
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 1;
+      }, 500);
+    });
+
+    // Efecto de destellos reducido y estable
     const createSparkle = () => {
       const spark = document.createElement('div');
       spark.classList.add('sparkle');
       spark.style.left = Math.random() * window.innerWidth + 'px';
       spark.style.top = window.innerHeight + 'px';
-      spark.style.animationDuration = 2 + Math.random() * 3 + 's';
+      spark.style.animationDuration = 2 + Math.random() * 2 + 's';
       document.body.appendChild(spark);
-      setTimeout(() => spark.remove(), 3000);
+      setTimeout(() => spark.remove(), 2500);
     };
-    setInterval(createSparkle, 200);
-
-    // Animación interactiva de la imagen
-    const portrait = document.getElementById('portrait');
-    document.addEventListener('mousemove', (e) => {
-      const x = (window.innerWidth / 2 - e.pageX) / 40;
-      const y = (window.innerHeight / 2 - e.pageY) / 40;
-      portrait.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
-    });
-    document.addEventListener('mouseleave', () => {
-      portrait.style.transform = 'translate(0,0)';
-    });
+    setInterval(createSparkle, 500);
   </script>
 </body>
 </html>
