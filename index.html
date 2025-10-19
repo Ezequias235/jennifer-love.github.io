@@ -21,7 +21,6 @@
       align-items:center;
     }
 
-    /* Cuadro inicial tipo carta */
     .card-start{
       width:260px;
       background:rgba(255,255,255,0.9);
@@ -34,22 +33,14 @@
       box-shadow:0 8px 25px rgba(255,102,170,0.4);
       cursor:pointer;
       padding:15px 20px;
-      max-height:350px;
+      max-height:400px;
       transition:opacity 0.5s ease;
     }
 
-    .card-start h2{
-      color:var(--accent);
-      font-size:22px;
-      margin-bottom:10px;
-    }
-    .card-start p{
-      font-size:16px;
-      color:#5a3a3a;
-      margin-bottom:10px;
-    }
+    .card-start h2{color:var(--accent);font-size:22px;margin-bottom:10px;}
+    .card-start p{font-size:16px;color:#5a3a3a;margin-bottom:10px;}
 
-    .card-start .btn, .btn-regresar{
+    .btn, .btn-regresar{
       display:block;
       width:160px;
       padding:8px 0;
@@ -64,11 +55,9 @@
       text-decoration:none;
       text-align:center;
     }
-    .card-start .btn:hover, .btn-regresar:hover{
-      background:#ff3388;
-    }
+    .btn:hover, .btn-regresar:hover{background:#ff3388;}
 
-    .container{
+    .container, .momentos{
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -81,10 +70,7 @@
       transition:opacity 0.5s ease;
     }
 
-    .container.show{
-      display:flex;
-      opacity:1;
-    }
+    .show{display:flex;opacity:1;}
 
     h1.main-title{
       font-size:50px;
@@ -102,12 +88,6 @@
       margin-bottom:30px;
     }
 
-    .sparkle{
-      position:absolute;width:4px;height:4px;background:white;border-radius:50%;opacity:0.8;
-      animation:spark 3s linear infinite;
-    }
-    @keyframes spark{0%{transform:translateY(0) scale(1);}50%{opacity:1;transform:translateY(-60px) scale(1.5);}100%{transform:translateY(-120px) scale(0.5);}}
-
     .textblock{
       background:rgba(255,255,255,0.75);
       padding:25px;
@@ -121,6 +101,26 @@
     .textblock h2{color:var(--accent);font-size:24px;margin-bottom:15px;}
     .textblock p{font-size:16px;line-height:1.6;color:#5a3a3a;}
 
+    .moment-card{
+      background:rgba(255,255,255,0.8);
+      border-radius:20px;
+      box-shadow:0 5px 20px rgba(255,102,170,0.3);
+      padding:20px;
+      text-align:center;
+      margin-bottom:20px;
+      width:100%;
+    }
+
+    .moment-card img{
+      width:100%;
+      border-radius:15px;
+      margin-bottom:10px;
+    }
+
+    .moment-card h3{color:var(--accent);font-size:20px;margin-bottom:5px;}
+    .moment-card .fecha{font-size:14px;color:#a35a6a;margin-bottom:10px;}
+    .moment-card p{font-size:15px;color:#5a3a3a;}
+
     footer{
       margin-top:10px;
       color:#a35a6a;
@@ -129,52 +129,50 @@
       margin-bottom:30px;
     }
 
-    /* Fondo corazones estable */
     .heart-bg{position:absolute;inset:0;overflow:hidden;z-index:-1;}
     .heart{position:absolute;color:#ffcce0;font-size:24px;opacity:0.7;}
 
-    /* Adaptación para móviles */
+    .sparkle{position:absolute;width:4px;height:4px;background:white;border-radius:50%;opacity:0.8;
+      animation:spark 3s linear infinite;}
+    @keyframes spark{0%{transform:translateY(0) scale(1);}50%{opacity:1;transform:translateY(-60px) scale(1.5);}100%{transform:translateY(-120px) scale(0.5);}}
+
     @media(max-width:480px){
       h1.main-title{font-size:36px;}
       .portrait{width:140px;height:140px;}
       .textblock h2{font-size:20px;}
       .textblock p{font-size:14px;}
       .heart{font-size:20px;}
-      .card-start{width:200px;padding:15px;max-height:300px;}
-      .card-start h2{font-size:18px;}
-      .card-start p{font-size:14px;}
-      .card-start .btn{width:140px;}
+      .card-start{width:200px;padding:15px;max-height:320px;}
+      .btn{width:140px;}
       .btn-regresar{width:140px;}
     }
   </style>
 </head>
 <body>
-  <!-- Fondo de corazones -->
   <div class="heart-bg">
     <div class="heart" style="left:15%;">💖</div>
     <div class="heart" style="left:50%;">💞</div>
     <div class="heart" style="left:80%;">💘</div>
   </div>
 
-  <!-- Cuadro inicial tipo carta -->
+  <!-- Inicio -->
   <div class="card-start" id="cardStart">
     <h2>📜 Carta para ti 📜</h2>
-    <p>Haz clic para descubrirla. ❤️</p>
     <button id="btnCarta" class="btn">Leer Carta</button>
-	<h2>🎶 Te la dedico 🎶</h2>
+    <h2>🎶 Te la dedico 🎶</h2>
     <a href="https://www.youtube.com/watch?v=rBLLbgD0FsM&list=RDrBLLbgD0FsM&start_radio=1" target="_blank" class="btn">Escuchar Música</a>
-	<p>Haz Clic para escucharla. 🎶</p>
+    <h2>Momentos Vividos</h2>
+    <button id="btnMomentosInicio" class="btn">Ver Momentos</button>
   </div>
 
-  <!-- Contenedor central -->
+  <!-- Carta -->
   <div class="container" id="container">
     <h1 class="main-title">Para ti, Jennifer.</h1>
-
-    <div class="portrait" id="portrait"></div>
+    <div class="portrait"></div>
 
     <div class="textblock">
       <h2>🌷 Carta para ti, Jennifer 🌷</h2>
-      <p>Desde la primera vez que te vi, sentí algo diferente</p>
+      <p>Desde la primera vez que te vi, sentí algo diferente.</p>
       <p>Mi corazón empezó a latir más rápido y, sin saber por qué, mi mente creó un mundo nuevo contigo dentro.</p>
       <p>Desde entonces, no dejo de pensarte; me imagino cómo sería algo entre nosotros, algo real, algo distinto.</p>
       <p>A veces me cuesta explicar lo que siento, me pongo nervioso a tu lado, pero sé que es algo grande. Todo lo que hago por ti lo hago con cariño, porque de verdad te valoro y siento que te mereces mucho más de lo que imaginas.</p>
@@ -187,15 +185,45 @@
 
       <button id="btnRegresar" class="btn-regresar">Regresar</button>
     </div>
-
     <footer>— Ezequias 💖 —</footer>
+  </div>
+
+  <!-- Momentos Vividos -->
+  <div class="momentos" id="momentos">
+    <h1 class="main-title">Momentos Vividos</h1>
+
+    <div class="moment-card">
+      <img src="PrimerMensaje.png" alt="Momento en el que te conocí">
+      <h3>Momento en el que te conocí</h3>
+      <div class="fecha">📅 17 de septiembre de 2025</div>
+      <p>Ese día sentí como si mi corazón hubiese estado mucho tiempo cubierto de polvo; mis pensamientos sobre el amor revivieron, y aunque duramos un mes sin hablarnos en persona, sentí una conexión en cada mensaje, en cada mirada y en cada sonrisa. Recuerdo que el primer viernes de empresa vi el mar y el cielo tan azules, que sentí como si mis días comenzaran a iluminarse y a llenarse de color. 💫</p>
+    </div>
+
+    <div class="moment-card">
+      <img src="flores.png" alt="Primer día que hablamos de verdad">
+      <h3>El día en que te di flores amarillas</h3>
+      <div class="fecha">📅 21 de septiembre de 2025</div>
+      <p>Realmente tenía un poco de nervios ese día; fue la primera vez que mi corazón sintió algo tan especial. Automáticamente, mi corazón se abrió hacia ti. Cuando me diste ese abrazo, para mí fueron como veinte segundos en los que mis problemas se apagaron, las voces interiores se silenciaron. Aunque hayan sido gestos simples, los hice con el corazón. Siento que esas flores se ven muy bonitas, igual que tú.</p>
+    </div>
+
+    <div class="moment-card">
+      <img src="ojos.png" alt="Dia de la confianza">
+      <h3>Primer día que sentí confianza hacia ti</h3>
+      <div class="fecha">📅 3 de octubre de 2025</div>
+      <p>Aunque el momento fue chistoso, fue un día en el que me hiciste sentir confiado al enviarme ese chinchón que te diste en la frente. Aún lo recuerdo, y tus ojos siguen siendo hermosos.</p>
+    </div>
+
+    <button id="btnVolverInicio" class="btn-regresar">Regresar</button>
   </div>
 
   <script>
     const cardStart = document.getElementById('cardStart');
     const container = document.getElementById('container');
+    const momentos = document.getElementById('momentos');
     const btnCarta = document.getElementById('btnCarta');
     const btnRegresar = document.getElementById('btnRegresar');
+    const btnMomentosInicio = document.getElementById('btnMomentosInicio');
+    const btnVolverInicio = document.getElementById('btnVolverInicio');
 
     btnCarta.addEventListener('click', () => {
       cardStart.style.opacity = 0;
@@ -213,7 +241,23 @@
       }, 500);
     });
 
-    // Efecto de destellos reducido y estable
+    btnMomentosInicio.addEventListener('click', () => {
+      cardStart.style.opacity = 0;
+      setTimeout(()=>{
+        cardStart.style.display = 'none';
+        momentos.classList.add('show');
+      }, 500);
+    });
+
+    btnVolverInicio.addEventListener('click', () => {
+      momentos.classList.remove('show');
+      setTimeout(()=>{
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 1;
+      }, 500);
+    });
+
+    // Efecto de destellos
     const createSparkle = () => {
       const spark = document.createElement('div');
       spark.classList.add('sparkle');
