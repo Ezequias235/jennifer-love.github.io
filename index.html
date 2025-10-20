@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>❤️ Para ti, Jennifer ❤️</title>
+  <title>Para ti, Jennifer❤️</title>
   <link rel="icon" type="image/png" href="Jennifer.png">
   <style>
     :root { --bg:#fff6fb; --accent:#ff66aa; --text:#4b2a2a; }
@@ -75,7 +75,7 @@
 
     .btn:hover, .btn-regresar:hover { background:#ff3388; transform:scale(1.05); }
 
-    .container, .momentos {
+    .container, .momentos, .musica {
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -141,6 +141,29 @@
     .moment-card .fecha { font-size:14px; color:#a35a6a; margin-bottom:10px; }
     .moment-card p { font-size:15px; color:#5a3a3a; }
 
+    /* estilos para musica (añadidos sin modificar lo tuyo) */
+    .song-card {
+      background:rgba(255,255,255,0.8);
+      border-radius:20px;
+      box-shadow:0 5px 20px rgba(255,102,170,0.3);
+      padding:18px;
+      text-align:center;
+      margin-bottom:16px;
+      width:100%;
+      animation:fadeUp 1s ease;
+    }
+    .song-card h3 { color:var(--accent); margin-bottom:8px; font-size:18px; }
+    .song-card p { font-size:14px; color:#5a3a3a; line-height:1.5; }
+
+    iframe {
+      width:100%;
+      height:200px;
+      border:none;
+      border-radius:12px;
+      margin-top:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+
     footer {
       margin-top:10px;
       color:#a35a6a;
@@ -183,9 +206,37 @@
     <h2>📜 Carta para ti 📜</h2>
     <button id="btnCarta" class="btn">Leer Carta</button>
     <h2>🎶 Te la dedico 🎶</h2>
-    <a href="https://www.youtube.com/watch?v=rBLLbgD0FsM&list=RDrBLLbgD0FsM&start_radio=1" target="_blank" class="btn">Escuchar Música</a>
+    <!-- cambiado a button para abrir el apartado de musica dentro de la misma página -->
+    <button id="btnMusica" class="btn">Escuchar Música</button>
     <h2>Momentos Vividos</h2>
     <button id="btnMomentosInicio" class="btn">Ver Momentos</button>
+  </div>
+
+  <!-- apartado Música (añadido) -->
+  <div class="musica" id="musica">
+    <h1 class="main-title">🎧 Música dedicada</h1>
+
+    <div class="song-card">
+      <h3>Canción: (link original)</h3>
+      <p>Elegí esta canción para ti porque sé que has pasado por momentos difíciles, pero también sé lo especial que eres. Quiero que recuerdes tu sonrisa, tu alegría, esas cosas que te hacen única. Que sepas que mereces ser feliz, que mereces volver a confiar y disfrutar de la vida… y yo quiero estar ahí para que esos momentos sean aún mejores contigo.</p>
+      <!-- embed del link que tenías en el href (usa el ID del vídeo si quieres otro) -->
+	  <iframe 
+    src="https://www.youtube.com/embed/rBLLbgD0FsM" 
+    allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="song-card">
+      <h3>Canción: Otra que me recuerda a ti</h3>
+      <p>He elegido esta canción porque refleja lo que siento en estos momentos: la confusión en mis pensamientos, preguntándome si realmente quieres a alguien como yo o si solo soy yo quien lo siente. También siento que quizás te estoy presionando, aunque tal vez no lo veas así, o tal vez yo no sea lo que buscas.</p>
+      <!-- ejemplo: embed de "Perfect" (puedes cambiar URL por la que prefieras) -->
+      <iframe 
+    src="https://www.youtube.com/embed/R0pwwqnGE9A" 
+    allowfullscreen>
+      </iframe>
+    </div>
+
+    <button id="btnVolverMusica" class="btn-regresar">Regresar</button>
   </div>
 
   <div class="container" id="container">
@@ -241,18 +292,22 @@
     const cardStart=document.getElementById('cardStart');
     const container=document.getElementById('container');
     const momentos=document.getElementById('momentos');
+    const musica=document.getElementById('musica');
     const heartBg=document.getElementById('heartBg');
     const clickSound=document.getElementById('clickSound');
 
     const btnCarta=document.getElementById('btnCarta');
+    const btnMusica=document.getElementById('btnMusica');
     const btnRegresar=document.getElementById('btnRegresar');
     const btnMomentosInicio=document.getElementById('btnMomentosInicio');
     const btnVolverInicio=document.getElementById('btnVolverInicio');
+    const btnVolverMusica=document.getElementById('btnVolverMusica');
 
     const playClick=()=>{ clickSound.currentTime=0; clickSound.play(); };
 
-    [btnCarta,btnRegresar,btnMomentosInicio,btnVolverInicio].forEach(b=>{
-      b.addEventListener('click',playClick);
+    // añado listeners a los botones (siempre revisa que click.mp3 exista)
+    [btnCarta,btnMusica,btnRegresar,btnMomentosInicio,btnVolverInicio,btnVolverMusica].forEach(b=>{
+      if(b) b.addEventListener('click',playClick);
     });
 
     btnCarta.addEventListener('click',()=>{
@@ -274,6 +329,18 @@
 
     btnVolverInicio.addEventListener('click',()=>{
       momentos.classList.remove('show');
+      setTimeout(()=>{cardStart.style.display='flex';cardStart.style.opacity=1;cardStart.style.transform="scale(1)";},500);
+    });
+
+    // abrir apartado música
+    btnMusica.addEventListener('click',()=>{
+      cardStart.style.opacity=0;
+      cardStart.style.transform="scale(0.95)";
+      setTimeout(()=>{cardStart.style.display='none';musica.classList.add('show');},500);
+    });
+
+    btnVolverMusica.addEventListener('click',()=>{
+      musica.classList.remove('show');
       setTimeout(()=>{cardStart.style.display='flex';cardStart.style.opacity=1;cardStart.style.transform="scale(1)";},500);
     });
 
