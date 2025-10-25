@@ -469,7 +469,7 @@
       <button id="btnEnamore" class="btn" aria-label="Ver historia de amor">Ver Historia</button>
     </div>
     <div>
-      <h2>📸 Galería de Fotos 📸</h2>
+      <h2>📷 Fotos 📷</h2>
       <button id="btnGaleria" class="btn" aria-label="Ver galería de fotos">Ver Galería</button>
     </div>
   </div>
@@ -776,7 +776,7 @@
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('floating-heart');
-      heart.innerText = ['❤️', '💕', '💖', '💞'][Math.floor(Math.random() * 4)];
+      heart.innerText = ['❤️', '💕', '💖', '💌'][Math.floor(Math.random() * 4)];
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.top = Math.random() * 100 + 'vh';
       const side = Math.floor(Math.random() * 4);
