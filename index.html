@@ -17,20 +17,22 @@
       overflow-y:auto;
       display:flex;
       flex-direction:column;
-      justify-content:center;
+      justify-content:flex-start;
       align-items:center;
       position:relative;
       animation:fadeInBody 2s ease forwards;
       scroll-behavior:smooth;
+      padding-top:20px;
     }
 
     @keyframes fadeInBody { from{opacity:0;} to{opacity:1;} }
     @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
-    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
     @keyframes heartbeat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
 
     .card-start {
-      width:260px;
+      width:90%;
+      max-width:300px;
       background:rgba(255,255,255,0.9);
       border-radius:20px;
       display:flex;
@@ -40,11 +42,10 @@
       text-align:center;
       box-shadow:0 8px 25px rgba(255,102,170,0.4);
       cursor:pointer;
-      padding:15px 20px;
-      max-height:400px;
+      padding:20px;
       transition:opacity 0.6s ease, transform 0.6s ease;
       animation:fadeUp 1s ease forwards;
-      margin:50px 0;
+      margin:20px 0;
     }
 
     .card-start h2 {
@@ -56,11 +57,11 @@
 
     .card-start p { font-size:16px;color:#5a3a3a;margin-bottom:10px; }
 
-    .btn, .btn-regresar {
+    .btn, .btn-regresar, .confirm-btn, .cancel-btn, .story-btn {
       display:block;
       width:160px;
       padding:8px 0;
-      margin:5px 0;
+      margin:5px auto;
       background:var(--accent);
       color:white;
       border:none;
@@ -73,9 +74,20 @@
       animation:fadeUp 1.2s ease;
     }
 
-    .btn:hover, .btn-regresar:hover { background:#ff3388; transform:scale(1.05); }
+    .btn:hover, .btn-regresar:hover, .confirm-btn:hover, .cancel-btn:hover, .story-btn:hover { 
+      background:#ff3388; 
+      transform:scale(1.05); 
+    }
 
-    .container, .momentos, .musica {
+    .cancel-btn { 
+      background:#a35a6a; 
+    }
+
+    .cancel-btn:hover { 
+      background:#8a4a5a; 
+    }
+
+    .container, .momentos, .musica, .enamore, .galeria {
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -141,7 +153,6 @@
     .moment-card .fecha { font-size:14px; color:#a35a6a; margin-bottom:10px; }
     .moment-card p { font-size:15px; color:#5a3a3a; }
 
-    /* estilos para musica (añadidos sin modificar lo tuyo) */
     .song-card {
       background:rgba(255,255,255,0.8);
       border-radius:20px;
@@ -173,7 +184,6 @@
       animation:fadeUp 2s ease;
     }
 
-    /* Fondo animado */
     .heart-bg { position:fixed; inset:0; overflow:hidden; z-index:-1; }
     .floating-heart {
       position:absolute;
@@ -189,13 +199,269 @@
       100% {opacity:0;transform:translate(var(--moveX),var(--moveY)) rotate(360deg);}
     }
 
+    /* Estilos para Cómo me enamoré - Juego Interactivo */
+    .story-game {
+      background: rgba(255,255,255,0.8);
+      border-radius:20px;
+      box-shadow:0 5px 20px rgba(255,102,170,0.3);
+      padding:20px;
+      width:100%;
+      text-align:center;
+      margin-bottom:20px;
+    }
+
+    .story-step {
+      display: none;
+      animation: fadeUp 1s ease;
+    }
+
+    .story-step.active {
+      display: block;
+    }
+
+    .story-step h3 { color:var(--accent); font-size:20px; margin-bottom:10px; }
+    .story-step p { font-size:15px; color:#5a3a3a; margin-bottom:15px; line-height:1.6; }
+
+    .story-btn {
+      display: inline-block;
+      margin: 5px;
+    }
+
+    /* Estilos para el textarea en Tu promesa */
+    .promise-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.9);
+      resize: vertical;
+      margin-bottom: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    .promise-textarea:focus {
+      outline: none;
+      border-color: #ff3388;
+      box-shadow: 0 0 8px rgba(255, 102, 170, 0.4);
+    }
+
+    .promise-saved {
+      font-size: 15px;
+      color: #5a3a3a;
+      margin-bottom: 15px;
+      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos para Galería de Fotos */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .gallery-item {
+      cursor: pointer;
+      position: relative;
+      animation: float 4s ease-in-out infinite;
+      animation-delay: calc(var(--index) * 0.2s);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .upload-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* Modal para galería con carousel */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .slideshow-container {
+      width: 100%;
+      max-height: 80vh;
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      touch-action: pan-y pinch-zoom;
+    }
+
+    .mySlides {
+      display: none;
+      width: 100%;
+      flex-shrink: 0;
+      text-align: center;
+      transition: transform 0.3s ease;
+      position: relative;
+      height: 100%;
+    }
+
+    .mySlides img {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .delete-x {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      z-index: 3;
+    }
+
+    .delete-x:hover {
+      background-color: rgba(255,0,0,0.7);
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: fixed;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -50px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      transition: 0.3s ease;
+      border-radius: 0 5px 5px 0;
+      user-select: none;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; border-radius: 5px 0 0 5px; }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .close {
+      position: fixed;
+      top: 20px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      z-index: 3;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Estilos para el diálogo de confirmación */
+    .confirm-dialog {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(255,102,170,0.4);
+      text-align: center;
+      max-width: 80%;
+      width: 300px;
+      z-index: 4;
+      animation: fadeUp 0.3s ease forwards;
+    }
+
+    .confirm-dialog.show {
+      display: block;
+    }
+
+    .confirm-dialog p {
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .confirm-dialog .confirm-btn, .confirm-dialog .cancel-btn {
+      display: inline-block;
+      width: 120px;
+      margin: 0 10px;
+    }
+
     @media(max-width:480px){
       h1.main-title{font-size:36px;}
       .portrait{width:140px;height:140px;}
       .textblock h2{font-size:20px;}
       .textblock p{font-size:14px;}
-      .card-start{width:200px;padding:15px;max-height:320px;}
-      .btn,.btn-regresar{width:140px;}
+      .card-start{width:90%;padding:15px;}
+      .btn,.btn-regresar,.confirm-btn,.cancel-btn,.story-btn{width:120px;}
+      .modal-content { max-width: 95%; max-height: 90vh; }
+      .mySlides img { max-height: 60vh; }
+      .prev, .next { font-size: 18px; padding: 12px; }
+      .delete-x { font-size: 20px; width: 25px; height: 25px; }
+      .confirm-dialog { max-width: 90%; width: 250px; }
+      .confirm-dialog .confirm-btn, .confirm-dialog .cancel-btn { width: 100px; }
+      .promise-textarea { font-size: 14px; min-height: 80px; }
+      .promise-saved { font-size: 14px; }
     }
   </style>
 </head>
@@ -206,43 +472,33 @@
     <h2>📜 Carta para ti 📜</h2>
     <button id="btnCarta" class="btn">Leer Carta</button>
     <h2>🎶 Te la dedico 🎶</h2>
-    <!-- cambiado a button para abrir el apartado de musica dentro de la misma página -->
     <button id="btnMusica" class="btn">Escuchar Música</button>
     <h2>Momentos Vividos</h2>
     <button id="btnMomentosInicio" class="btn">Ver Momentos</button>
+    <h2>¿Cómo me enamoré?</h2>
+    <button id="btnEnamore" class="btn">Ver Historia</button>
+    <h2>📸 Galería de Fotos 📸</h2>
+    <button id="btnGaleria" class="btn">Ver Galería</button>
   </div>
 
-  <!-- apartado Música (añadido) -->
   <div class="musica" id="musica">
     <h1 class="main-title">Música dedicada</h1>
-
     <div class="song-card">
       <h3>🎧 Canción: Ivan Cornejo - Está Dañada</h3>
       <p>Elegí esta canción para ti porque sé que has pasado por momentos difíciles, pero también sé lo especial que eres. Quiero que recuerdes tu sonrisa, tu alegría, esas cosas que te hacen única. Que sepas que mereces ser feliz, que mereces volver a confiar y disfrutar de la vida… y yo quiero estar ahí para que esos momentos sean aún mejores contigo.</p>
-      <!-- embed del link que tenías en el href (usa el ID del vídeo si quieres otro) -->
-	  <iframe 
-    src="https://www.youtube.com/embed/rBLLbgD0FsM" 
-    allowfullscreen>
-      </iframe>
+      <iframe src="https://www.youtube.com/embed/rBLLbgD0FsM" allowfullscreen></iframe>
     </div>
-
     <div class="song-card">
       <h3>🎧 Canción: Kevin Kaarl - no me culpes por sentir</h3>
       <p>He elegido esta canción porque refleja lo que siento en estos momentos: la confusión en mis pensamientos, preguntándome si realmente quieres a alguien como yo o si solo soy yo quien lo siente. También siento que quizás te estoy presionando, aunque tal vez no lo veas así, o tal vez yo no sea lo que buscas.</p>
-      <!-- ejemplo: embed de "Perfect" (puedes cambiar URL por la que prefieras) -->
-      <iframe 
-    src="https://www.youtube.com/embed/R0pwwqnGE9A" 
-    allowfullscreen>
-      </iframe>
+      <iframe src="https://www.youtube.com/embed/R0pwwqnGE9A" allowfullscreen></iframe>
     </div>
-
     <button id="btnVolverMusica" class="btn-regresar">Regresar</button>
   </div>
 
   <div class="container" id="container">
     <h1 class="main-title">Para ti, Jennifer.</h1>
     <div class="portrait"></div>
-
     <div class="textblock">
       <h2>🌷 Carta para ti, Jennifer 🌷</h2>
       <p>Desde la primera vez que te vi, sentí algo diferente.</p>
@@ -261,108 +517,549 @@
 
   <div class="momentos" id="momentos">
     <h1 class="main-title">Momentos Vividos</h1>
-
     <div class="moment-card">
       <img src="PrimerMensaje.png" alt="Momento en el que te conocí">
       <h3>Momento en el que te conocí</h3>
       <div class="fecha">📅 17 de septiembre de 2025</div>
       <p>Ese día sentí como si mi corazón hubiese estado mucho tiempo cubierto de polvo; mis pensamientos sobre el amor revivieron, y aunque duramos un mes sin hablarnos en persona, sentí una conexión en cada mensaje, en cada mirada y en cada sonrisa. Recuerdo que el primer viernes de empresa vi el mar y el cielo tan azules, que sentí como si mis días comenzaran a iluminarse y a llenarse de color.</p>
     </div>
-
     <div class="moment-card">
       <img src="flores.png" alt="Primer día que hablamos de verdad">
       <h3>El día en que te di flores amarillas</h3>
       <div class="fecha">📅 21 de septiembre de 2025</div>
       <p>Realmente tenía un poco de nervios ese día; fue la primera vez que mi corazón sintió algo tan especial. Automáticamente, mi corazón se abrió hacia ti. Cuando me diste ese abrazo, para mí fueron como veinte segundos en los que mis problemas se apagaron, las voces interiores se silenciaron. Aunque hayan sido gestos simples, los hice con el corazón. Siento que esas flores se ven muy bonitas, igual que tú.</p>
     </div>
-
     <div class="moment-card">
       <img src="ojos.png" alt="Día de la confianza">
       <h3>Primer día que sentí confianza hacia ti</h3>
       <div class="fecha">📅 3 de octubre de 2025</div>
       <p>Aunque el momento fue chistoso, fue un día en el que me hiciste sentir confiado al enviarme ese chinchón que te diste en la frente. Aún lo recuerdo, y tus ojos siguen siendo hermosos.</p>
     </div>
-
     <button id="btnVolverInicio" class="btn-regresar">Regresar</button>
+  </div>
+
+  <!-- Apartado Cómo me enamoré - Juego Interactivo -->
+  <div class="enamore" id="enamore">
+    <h1 class="main-title">Juego: Cómo me enamoré</h1>
+    <div class="story-game">
+      <div class="story-step active" id="step1">
+        <h3>Razones</h3>
+        <p>Siento que tienes un corazón muy lindo por tu forma de ser y por cómo te demuestras conmigo, aunque a veces seas un poco dura al expresarte. Me encanta tu mirada, tus ojitos cuando me miras, y tu sonrisa al hablarme o contarme cualquier cosa. Tu timidez te hace aún más especial, y cada vez que estás cerca me haces sentir en paz; al abrazarte o simplemente al saber que estás ahí, mis problemas parecen desvanecerse y me siento tranquilo. Hay algo en ti que me atrae sin saber exactamente qué es, sin razón aparente; cada vez que te veo me siento diferente, y aunque no sé qué es exactamente, todo lo que siento por ti es real.</p>
+        <button class="story-btn" onclick="nextStep(2)">Continuar ❤️</button>
+      </div>
+      <div class="story-step" id="step2">
+        <h3>Por qué</h3>
+        <p>Mis sentimientos crecieron porque me mostraste interés; no sé exactamente qué decirte, como cuando te expresaste nerviosa o tímida. Te he abierto mi corazón; puedes tomarlo, y si no te corresponde, simplemente has que corresponda 😁👍. Y aunque me contaste que te entregaste completamente a otra persona emocionalmente, siento que mereces ser amada, cuidada y respetada. Quiero ser esa persona que poco a poco te ame, que te quiera cada día a su lado y que te demuestre un interés real.</p>
+        <button class="story-btn" onclick="prevStep(1)">Anterior</button>
+        <button class="story-btn" onclick="nextStep(3)">Siguiente ✨</button>
+      </div>
+      <div class="story-step" id="step3">
+        <h3>Tu Ojitos y Sonrisa</h3>
+        <p>Tus ojitos y tu sonrisa… me enamoré completamente de ellos. Me encanta cómo me miras y sonríes al mismo tiempo. También admiro mucho cuando sonríes y me hablas; tus pupilas siguen vivas, y quiero ayudarte a mantenerlas siempre así, llenas de vida y alegría. Quiero descubrir ese paraíso que hay en tu corazón, arreglar los momentos mal vividos dentro de ti y estudiarte, conocer cada parte de ti poco a poco para entenderte y cuidarte como te mereces.</p>
+        <button class="story-btn" onclick="prevStep(2)">Anterior</button>
+        <button class="story-btn" onclick="nextStep(4)">Siguiente 🌟</button>
+      </div>
+      <div class="story-step" id="step4">
+        <h3>Mi promesa</h3>
+        <p>No todos los días son buenos, ni todos los días son de color azul, pero prometo que si alguna vez llega a pasar algo, siempre estaré ahí para ti en lo que sea posible. Siempre te llevo presente en mis pensamientos, así que eso no hace falta prometerlo; siempre será así. Prometo que todo lo que vivamos será bonito, que no habrá desinterés ni desconfianza, porque realmente te quiero muchísimo.</p>
+        <button class="story-btn" onclick="prevStep(3)">Anterior</button>
+        <button class="story-btn" onclick="nextStep(5)">Siguiente 💖</button>
+      </div>
+      <div class="story-step" id="step5">
+        <h3>Tu promesa</h3>
+        <p>Escribe aquí tu promesa para mí, Jennifer. 💖</p>
+        <textarea class="promise-textarea" id="promiseInput" placeholder="Escribe tu promesa..."></textarea>
+        <button class="story-btn" id="savePromiseBtn">Guardar Promesa</button>
+        <div class="promise-saved" id="savedPromise" style="display: none;"></div>
+        <button class="story-btn" onclick="prevStep(4)">Anterior</button>
+        <button class="story-btn btn-regresar" onclick="returnToMain()">Regresar</button>
+      </div>
+    </div>
+    <button id="btnVolverEnamore" class="btn-regresar">Regresar</button>
+  </div>
+
+  <!-- Apartado Galería de Fotos -->
+  <div class="galeria" id="galeria">
+    <h1 class="main-title">Galería de Fotos</h1>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-item" data-index="0" onclick="openModal(0)" style="--index:0">
+        <img src="PrimerMensaje.png" alt="Primer Mensaje">
+      </div>
+      <div class="gallery-item" data-index="1" onclick="openModal(1)" style="--index:1">
+        <img src="flores.png" alt="Flores Amarillas">
+      </div>
+      <div class="gallery-item" data-index="2" onclick="openModal(2)" style="--index:2">
+        <img src="ojos.png" alt="Ojos Hermosos">
+      </div>
+      <div class="gallery-item" data-index="3" onclick="openModal(3)" style="--index:3">
+        <img src="Jennifer.png" alt="Jennifer">
+      </div>
+      <div class="gallery-item" data-index="4" onclick="openModal(4)" style="--index:4">
+        <img src="Ezequias.png" alt="Ezequias">
+      </div>
+      <div class="gallery-item" data-index="5" onclick="openModal(5)" style="--index:5">
+        <img src="PrimerMensaje.png" alt="Otro Momento">
+      </div>
+    </div>
+    <div class="upload-container">
+      <label for="photoUpload" class="btn" style="cursor: pointer;">Subir Fotos desde Teléfono/Galería</label>
+      <input type="file" id="photoUpload" accept="image/*" multiple style="display: none;">
+    </div>
+    <button id="btnVolverGaleria" class="btn-regresar">Regresar</button>
+  </div>
+
+  <!-- Modal con Carousel -->
+  <div id="photoModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <div class="slideshow-container" id="slideshowContainer">
+        <div class="mySlides" data-index="0">
+          <img src="PrimerMensaje.png" alt="Primer Mensaje">
+          <span class="delete-x" onclick="showConfirmDialog(0, event)">&times;</span>
+          <div class="confirm-dialog" data-index="0">
+            <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+            <button class="confirm-btn" onclick="confirmDelete(0)">Confirmar</button>
+            <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+          </div>
+        </div>
+        <div class="mySlides" data-index="1">
+          <img src="flores.png" alt="Flores Amarillas">
+          <span class="delete-x" onclick="showConfirmDialog(1, event)">&times;</span>
+          <div class="confirm-dialog" data-index="1">
+            <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+            <button class="confirm-btn" onclick="confirmDelete(1)">Confirmar</button>
+            <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+          </div>
+        </div>
+        <div class="mySlides" data-index="2">
+          <img src="ojos.png" alt="Ojos Hermosos">
+          <span class="delete-x" onclick="showConfirmDialog(2, event)">&times;</span>
+          <div class="confirm-dialog" data-index="2">
+            <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+            <button class="confirm-btn" onclick="confirmDelete(2)">Confirmar</button>
+            <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+          </div>
+        </div>
+        <div class="mySlides" data-index="3">
+          <img src="Jennifer.png" alt="Jennifer">
+          <span class="delete-x" onclick="showConfirmDialog(3, event)">&times;</span>
+          <div class="confirm-dialog" data-index="3">
+            <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+            <button class="confirm-btn" onclick="confirmDelete(3)">Confirmar</button>
+            <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+          </div>
+        </div>
+        <div class="mySlides" data-index="4">
+          <img src="Ezequias.png" alt="Ezequias">
+          <span class="delete-x" onclick="showConfirmDialog(4, event)">&times;</span>
+          <div class="confirm-dialog" data-index="4">
+            <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+            <button class="confirm-btn" onclick="confirmDelete(4)">Confirmar</button>
+            <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+          </div>
+        </div>
+        <div class="mySlides" data-index="5">
+          <img src="PrimerMensaje.png" alt="Otro Momento">
+          <span class="delete-x" onclick="showConfirmDialog(5, event)">&times;</span>
+          <div class="confirm-dialog" data-index="5">
+            <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+            <button class="confirm-btn" onclick="confirmDelete(5)">Confirmar</button>
+            <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
   </div>
 
   <audio id="clickSound" src="click.mp3" preload="auto"></audio>
 
   <script>
-    const cardStart=document.getElementById('cardStart');
-    const container=document.getElementById('container');
-    const momentos=document.getElementById('momentos');
-    const musica=document.getElementById('musica');
-    const heartBg=document.getElementById('heartBg');
-    const clickSound=document.getElementById('clickSound');
+    const cardStart = document.getElementById('cardStart');
+    const container = document.getElementById('container');
+    const momentos = document.getElementById('momentos');
+    const musica = document.getElementById('musica');
+    const enamore = document.getElementById('enamore');
+    const galeria = document.getElementById('galeria');
+    const heartBg = document.getElementById('heartBg');
+    const clickSound = document.getElementById('clickSound');
 
-    const btnCarta=document.getElementById('btnCarta');
-    const btnMusica=document.getElementById('btnMusica');
-    const btnRegresar=document.getElementById('btnRegresar');
-    const btnMomentosInicio=document.getElementById('btnMomentosInicio');
-    const btnVolverInicio=document.getElementById('btnVolverInicio');
-    const btnVolverMusica=document.getElementById('btnVolverMusica');
+    const btnCarta = document.getElementById('btnCarta');
+    const btnMusica = document.getElementById('btnMusica');
+    const btnRegresar = document.getElementById('btnRegresar');
+    const btnMomentosInicio = document.getElementById('btnMomentosInicio');
+    const btnVolverInicio = document.getElementById('btnVolverInicio');
+    const btnVolverMusica = document.getElementById('btnVolverMusica');
+    const btnEnamore = document.getElementById('btnEnamore');
+    const btnVolverEnamore = document.getElementById('btnVolverEnamore');
+    const btnGaleria = document.getElementById('btnGaleria');
+    const btnVolverGaleria = document.getElementById('btnVolverGaleria');
 
-    const playClick=()=>{ clickSound.currentTime=0; clickSound.play(); };
+    const playClick = () => { clickSound.currentTime = 0; clickSound.play(); };
 
-    // añado listeners a los botones (siempre revisa que click.mp3 exista)
-    [btnCarta,btnMusica,btnRegresar,btnMomentosInicio,btnVolverInicio,btnVolverMusica].forEach(b=>{
-      if(b) b.addEventListener('click',playClick);
+    [btnCarta, btnMusica, btnRegresar, btnMomentosInicio, btnVolverInicio, btnVolverMusica, btnEnamore, btnVolverEnamore, btnGaleria, btnVolverGaleria].forEach(b => {
+      if (b) b.addEventListener('click', playClick);
     });
 
-    btnCarta.addEventListener('click',()=>{
-      cardStart.style.opacity=0;
-      cardStart.style.transform="scale(0.95)";
-      setTimeout(()=>{cardStart.style.display='none';container.classList.add('show');},500);
+    btnCarta.addEventListener('click', () => {
+      cardStart.style.opacity = 0;
+      cardStart.style.transform = "scale(0.95)";
+      setTimeout(() => { cardStart.style.display = 'none'; container.classList.add('show'); }, 500);
     });
 
-    btnRegresar.addEventListener('click',()=>{
+    btnRegresar.addEventListener('click', () => {
       container.classList.remove('show');
-      setTimeout(()=>{cardStart.style.display='flex';cardStart.style.opacity=1;cardStart.style.transform="scale(1)";},500);
+      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
     });
 
-    btnMomentosInicio.addEventListener('click',()=>{
-      cardStart.style.opacity=0;
-      cardStart.style.transform="scale(0.95)";
-      setTimeout(()=>{cardStart.style.display='none';momentos.classList.add('show');},500);
+    btnMomentosInicio.addEventListener('click', () => {
+      cardStart.style.opacity = 0;
+      cardStart.style.transform = "scale(0.95)";
+      setTimeout(() => { cardStart.style.display = 'none'; momentos.classList.add('show'); }, 500);
     });
 
-    btnVolverInicio.addEventListener('click',()=>{
+    btnVolverInicio.addEventListener('click', () => {
       momentos.classList.remove('show');
-      setTimeout(()=>{cardStart.style.display='flex';cardStart.style.opacity=1;cardStart.style.transform="scale(1)";},500);
+      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
     });
 
-    // abrir apartado música
-    btnMusica.addEventListener('click',()=>{
-      cardStart.style.opacity=0;
-      cardStart.style.transform="scale(0.95)";
-      setTimeout(()=>{cardStart.style.display='none';musica.classList.add('show');},500);
+    btnMusica.addEventListener('click', () => {
+      cardStart.style.opacity = 0;
+      cardStart.style.transform = "scale(0.95)";
+      setTimeout(() => { cardStart.style.display = 'none'; musica.classList.add('show'); }, 500);
     });
 
-    btnVolverMusica.addEventListener('click',()=>{
+    btnVolverMusica.addEventListener('click', () => {
       musica.classList.remove('show');
-      setTimeout(()=>{cardStart.style.display='flex';cardStart.style.opacity=1;cardStart.style.transform="scale(1)";},500);
+      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
     });
 
-    // corazones flotando de esquinas a esquinas
-    function createHeart(){
-      const heart=document.createElement('div');
+    btnEnamore.addEventListener('click', () => {
+      cardStart.style.opacity = 0;
+      cardStart.style.transform = "scale(0.95)";
+      setTimeout(() => { 
+        cardStart.style.display = 'none'; 
+        enamore.classList.add('show'); 
+        resetStory();
+        loadPromise(); // Cargar la promesa al entrar en la sección
+      }, 500);
+    });
+
+    btnVolverEnamore.addEventListener('click', () => {
+      enamore.classList.remove('show');
+      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+    });
+
+    btnGaleria.addEventListener('click', () => {
+      cardStart.style.opacity = 0;
+      cardStart.style.transform = "scale(0.95)";
+      setTimeout(() => { cardStart.style.display = 'none'; galeria.classList.add('show'); }, 500);
+    });
+
+    btnVolverGaleria.addEventListener('click', () => {
+      galeria.classList.remove('show');
+      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+    });
+
+    // Corazones flotando
+    function createHeart() {
+      const heart = document.createElement('div');
       heart.classList.add('floating-heart');
-      heart.innerText=['💖','💘','💞','💕','❤️'][Math.floor(Math.random()*5)];
-      const startX=Math.random()>0.5?'-10vw':'110vw';
-      const endX=startX==='-10vw'?'110vw':'-10vw';
-      const startY=Math.random()*100+'vh';
-      const endY=Math.random()*100+'vh';
-      heart.style.left=startX;
-      heart.style.top=startY;
-      heart.style.setProperty('--moveX',`calc(${endX} - ${startX})`);
-      heart.style.setProperty('--moveY',`calc(${endY} - ${startY})`);
-      heart.style.fontSize=15+Math.random()*25+'px';
-      heart.style.animationDuration=6+Math.random()*6+'s';
+      heart.innerText = ['💖', '💘', '💞', '❤️'][Math.floor(Math.random() * 4)]; // Corregido '�15'
+      const startX = Math.random() > 0.5 ? '-10vw' : '110vw';
+      const endX = startX === '-10vw' ? '110vw' : '-10vw';
+      const startY = Math.random() * 100 + 'vh';
+      const endY = Math.random() * 100 + 'vh';
+      heart.style.left = startX;
+      heart.style.top = startY;
+      heart.style.setProperty('--moveX', `calc(${endX} - ${startX})`);
+      heart.style.setProperty('--moveY', `calc(${endY} - ${startY})`);
+      heart.style.fontSize = 15 + Math.random() * 25 + 'px';
+      heart.style.animationDuration = 6 + Math.random() * 6 + 's';
       heartBg.appendChild(heart);
-      setTimeout(()=>heart.remove(),12000);
+      setTimeout(() => heart.remove(), 12000);
     }
-    setInterval(createHeart,700);
+    setInterval(createHeart, 700);
+
+    // Modal y Carousel para galería
+    let slideIndex = 1;
+    let galleryImages = [
+      { src: 'PrimerMensaje.png', alt: 'Primer Mensaje' },
+      { src: 'flores.png', alt: 'Flores Amarillas' },
+      { src: 'ojos.png', alt: 'Ojos Hermosos' },
+      { src: 'Jennifer.png', alt: 'Jennifer' },
+      { src: 'Ezequias.png', alt: 'Ezequias' },
+      { src: 'PrimerMensaje.png', alt: 'Otro Momento' }
+    ];
+
+    function openModal(n) {
+      const modal = document.getElementById('photoModal');
+      modal.style.display = 'flex';
+      showSlides(slideIndex = n + 1);
+      setupSwipe();
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('photoModal');
+      document.querySelectorAll('.confirm-dialog').forEach(dialog => dialog.classList.remove('show'));
+      modal.style.display = 'none';
+    }
+
+    function plusSlides(n) {
+      document.querySelectorAll('.confirm-dialog').forEach(dialog => dialog.classList.remove('show'));
+      showSlides(slideIndex += n);
+      playClick();
+    }
+
+    function showSlides(n) {
+      let slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+        slides[i].style.transform = "translateX(0)";
+      }
+      slides[slideIndex - 1].style.display = "block";
+    }
+
+    // Swipe Functionality
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+
+    function setupSwipe() {
+      const slideshowContainer = document.getElementById('slideshowContainer');
+      slideshowContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        isDragging = true;
+      });
+
+      slideshowContainer.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+          touchEndX = e.changedTouches[0].screenX;
+          const diffX = touchStartX - touchEndX;
+          const slide = document.getElementsByClassName("mySlides")[slideIndex - 1];
+          slide.style.transform = `translateX(${-diffX}px)`;
+        }
+      });
+
+      slideshowContainer.addEventListener('touchend', (e) => {
+        if (isDragging) {
+          touchEndX = e.changedTouches[0].screenX;
+          const diffX = touchStartX - touchEndX;
+          if (Math.abs(diffX) > 50) { // Minimum swipe distance
+            if (diffX > 0) {
+              plusSlides(1); // Swipe left -> next
+            } else {
+              plusSlides(-1); // Swipe right -> previous
+            }
+          } else {
+            const slide = document.getElementsByClassName("mySlides")[slideIndex - 1];
+            slide.style.transform = "translateX(0)";
+          }
+          isDragging = false;
+        }
+      });
+    }
+
+    // Subir Fotos
+    document.getElementById('photoUpload').addEventListener('change', (event) => {
+      const files = event.target.files;
+      const galleryGrid = document.getElementById('galleryGrid');
+      const slideshowContainer = document.getElementById('slideshowContainer');
+      for (let file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imgIndex = galleryImages.length;
+          galleryImages.push({ src: e.target.result, alt: `Foto subida ${imgIndex + 1}` });
+          
+          // Agregar a la galería
+          const galleryItem = document.createElement('div');
+          galleryItem.classList.add('gallery-item');
+          galleryItem.dataset.index = imgIndex;
+          galleryItem.style.setProperty('--index', imgIndex);
+          galleryItem.onclick = () => openModal(imgIndex);
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = `Foto subida ${imgIndex + 1}`;
+          galleryItem.appendChild(img);
+          galleryGrid.appendChild(galleryItem);
+
+          // Agregar al carousel del modal
+          const slide = document.createElement('div');
+          slide.classList.add('mySlides');
+          slide.dataset.index = imgIndex;
+          const slideImg = document.createElement('img');
+          slideImg.src = e.target.result;
+          slideImg.alt = `Foto subida ${imgIndex + 1}`;
+          const deleteX = document.createElement('span');
+          deleteX.classList.add('delete-x');
+          deleteX.textContent = '×';
+          deleteX.onclick = (event) => showConfirmDialog(imgIndex, event);
+          const confirmDialog = document.createElement('div');
+          confirmDialog.classList.add('confirm-dialog');
+          confirmDialog.dataset.index = imgIndex;
+          confirmDialog.innerHTML = `
+            <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+            <button class="confirm-btn" onclick="confirmDelete(${imgIndex})">Confirmar</button>
+            <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+          `;
+          slide.appendChild(slideImg);
+          slide.appendChild(deleteX);
+          slide.appendChild(confirmDialog);
+          slideshowContainer.appendChild(slide);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Diálogo de Confirmación
+    function showConfirmDialog(index, event) {
+      event.stopPropagation();
+      document.querySelectorAll('.confirm-dialog').forEach(dialog => dialog.classList.remove('show'));
+      const dialog = document.querySelector(`.mySlides[data-index="${index}"] .confirm-dialog`);
+      if (dialog) dialog.classList.add('show');
+      playClick();
+    }
+
+    function confirmDelete(index) {
+      if (index >= galleryImages.length) return; // Prevent invalid index
+      const galleryGrid = document.getElementById('galleryGrid');
+      const slideshowContainer = document.getElementById('slideshowContainer');
+      
+      // Eliminar del array
+      galleryImages.splice(index, 1);
+
+      // Reconstruir galería
+      galleryGrid.innerHTML = '';
+      galleryImages.forEach((img, i) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.classList.add('gallery-item');
+        galleryItem.dataset.index = i;
+        galleryItem.style.setProperty('--index', i);
+        galleryItem.onclick = () => openModal(i);
+        const imgElement = document.createElement('img');
+        imgElement.src = img.src;
+        imgElement.alt = img.alt;
+        galleryItem.appendChild(imgElement);
+        galleryGrid.appendChild(galleryItem);
+      });
+
+      // Reconstruir carousel
+      slideshowContainer.innerHTML = '';
+      galleryImages.forEach((img, i) => {
+        const slide = document.createElement('div');
+        slide.classList.add('mySlides');
+        slide.dataset.index = i;
+        const slideImg = document.createElement('img');
+        slideImg.src = img.src;
+        slideImg.alt = img.alt;
+        const deleteX = document.createElement('span');
+        deleteX.classList.add('delete-x');
+        deleteX.textContent = '×';
+        deleteX.onclick = (event) => showConfirmDialog(i, event);
+        const confirmDialog = document.createElement('div');
+        confirmDialog.classList.add('confirm-dialog');
+        confirmDialog.dataset.index = i;
+        confirmDialog.innerHTML = `
+          <p>¿Estás seguro de que quieres eliminar esta foto?</p>
+          <button class="confirm-btn" onclick="confirmDelete(${i})">Confirmar</button>
+          <button class="cancel-btn" onclick="cancelDelete()">Cancelar</button>
+        `;
+        slide.appendChild(slideImg);
+        slide.appendChild(deleteX);
+        slide.appendChild(confirmDialog);
+        slideshowContainer.appendChild(slide);
+      });
+
+      // Ajustar el índice del modal
+      if (slideIndex > galleryImages.length) {
+        slideIndex = galleryImages.length;
+      }
+      if (document.getElementById('photoModal').style.display === 'flex') {
+        if (galleryImages.length === 0) {
+          closeModal();
+        } else {
+          showSlides(slideIndex);
+        }
+      }
+      playClick();
+    }
+
+    function cancelDelete() {
+      document.querySelectorAll('.confirm-dialog').forEach(dialog => dialog.classList.remove('show'));
+      playClick();
+    }
+
+    // Juego de Historia
+    function nextStep(step) {
+      document.querySelector('.story-step.active').classList.remove('active');
+      document.getElementById('step' + step).classList.add('active');
+      if (step === 5) {
+        loadPromise(); // Cargar la promesa al llegar al paso 5
+      }
+      playClick();
+    }
+
+    function prevStep(step) {
+      document.querySelector('.story-step.active').classList.remove('active');
+      document.getElementById('step' + step).classList.add('active');
+      playClick();
+    }
+
+    function resetStory() {
+      document.querySelectorAll('.story-step').forEach(step => step.classList.remove('active'));
+      document.getElementById('step1').classList.add('active');
+    }
+
+    function returnToMain() {
+      enamore.classList.remove('show');
+      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+      playClick();
+    }
+
+    // Manejo de la Promesa
+    const promiseInput = document.getElementById('promiseInput');
+    const savePromiseBtn = document.getElementById('savePromiseBtn');
+    const savedPromiseDiv = document.getElementById('savedPromise');
+
+    function loadPromise() {
+      const savedPromise = localStorage.getItem('jenniferPromise');
+      if (savedPromise) {
+        savedPromiseDiv.textContent = savedPromise;
+        savedPromiseDiv.style.display = 'block';
+        promiseInput.style.display = 'none';
+        savePromiseBtn.textContent = 'Editar Promesa';
+      } else {
+        savedPromiseDiv.style.display = 'none';
+        promiseInput.style.display = 'block';
+        promiseInput.value = '';
+        savePromiseBtn.textContent = 'Guardar Promesa';
+      }
+    }
+
+    savePromiseBtn.addEventListener('click', () => {
+      const savedPromise = localStorage.getItem('jenniferPromise');
+      if (savedPromise && savePromiseBtn.textContent === 'Editar Promesa') {
+        // Cambiar a modo edición
+        savedPromiseDiv.style.display = 'none';
+        promiseInput.style.display = 'block';
+        promiseInput.value = savedPromise;
+        savePromiseBtn.textContent = 'Guardar Promesa';
+      } else {
+        // Guardar la promesa
+        const promiseText = promiseInput.value.trim();
+        if (promiseText) {
+          localStorage.setItem('jenniferPromise', promiseText);
+          savedPromiseDiv.textContent = promiseText;
+          savedPromiseDiv.style.display = 'block';
+          promiseInput.style.display = 'none';
+          savePromiseBtn.textContent = 'Editar Promesa';
+        }
+      }
+      playClick();
+    });
   </script>
 </body>
 </html>
