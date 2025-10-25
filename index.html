@@ -1,236 +1,334 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Para ti, Jennifer❤️</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti, Jennifer ❤️</title>
   <link rel="icon" type="image/png" href="Jennifer.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    :root { --bg:#fff6fb; --accent:#ff66aa; --text:#4b2a2a; }
-    * { box-sizing:border-box; margin:0; padding:0; }
-
-    body {
-      min-height:100vh;
-      font-family:'Poppins',sans-serif;
-      color:var(--text);
-      background:radial-gradient(circle at top,#fff0f8,#ffd6e8,#ffe6f6);
-      overflow-y:auto;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      align-items:center;
-      position:relative;
-      animation:fadeInBody 2s ease forwards;
-      scroll-behavior:smooth;
-      padding-top:20px;
+    :root {
+      --primary: #6d28d9; /* Púrpura elegante */
+      --secondary: #f472b6; /* Rosa suave */
+      --accent: #facc15; /* Dorado mágico */
+      --text: #1f2937; /* Texto oscuro */
+      --bg: linear-gradient(135deg, #ede9fe 0%, #fce7f3 50%, #fef9c3 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --shadow: 0 8px 30px rgba(109, 40, 217, 0.2);
     }
 
-    @keyframes fadeInBody { from{opacity:0;} to{opacity:1;} }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
-    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-    @keyframes heartbeat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      scroll-behavior: smooth;
+      padding: 20px;
+    }
+
+    #clock {
+      font-family: 'Playfair Display', serif;
+      color: var(--secondary);
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
+    }
+
+    /* Fondo dinámico */
+    .bg-effects {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: floatStar 15s linear infinite;
+    }
+
+    @keyframes floatStar {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 20px;
+      opacity: 0;
+      animation: heartFloat 6s ease-out forwards;
+    }
+
+    @keyframes heartFloat {
+      0% { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(0.5); }
+      10% { opacity: 0.7; }
+      100% { opacity: 0; transform: translate(var(--x-end), var(--y-end)) rotate(360deg) scale(1.5); }
+    }
+
+    /* Animaciones */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+    /* Títulos */
+    h1.main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: var(--primary);
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(109, 40, 217, 0.3);
+      margin: 30px 0;
+      animation: heartbeat 3s infinite ease-in-out;
+    }
+
+    /* Portrait */
+    .portrait {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: url('Jennifer.png') center/cover no-repeat;
+      border: 5px solid var(--card-bg);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* Card inicial */
     .card-start {
-      width:90%;
-      max-width:300px;
-      background:rgba(255,255,255,0.9);
-      border-radius:20px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      box-shadow:0 8px 25px rgba(255,102,170,0.4);
-      cursor:pointer;
-      padding:20px;
-      transition:opacity 0.6s ease, transform 0.6s ease;
-      animation:fadeUp 1s ease forwards;
-      margin:20px 0;
+      width: 90%;
+      max-width: 400px; /* Reducido para un diseño más compacto */
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 15px; /* Margen interno reducido */
+      text-align: center;
+      box-shadow: var(--shadow);
+      animation: fadeInUp 1s ease;
+      margin: 20px auto; /* Centrado con margen automático */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px; /* Espaciado vertical */
+      position: relative;
+      overflow: visible;
+    }
+
+    .card-start > div {
+      width: 100%; /* Ocupa todo el ancho disponible */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .card-start h2 {
-      color:var(--accent);
-      font-size:22px;
-      margin-bottom:10px;
-      animation:fadeUp 1s ease;
+      font-family: 'Playfair Display', serif;
+      color: var(--secondary);
+      font-size: 1.5rem;
+      margin: 10px 0;
     }
 
-    .card-start p { font-size:16px;color:#5a3a3a;margin-bottom:10px; }
-
+    /* Botones */
     .btn, .btn-regresar, .story-btn {
-      display:block;
-      width:160px;
-      padding:8px 0;
-      margin:5px auto;
-      background:var(--accent);
-      color:white;
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      font-weight:bold;
-      transition:0.3s;
-      text-decoration:none;
-      text-align:center;
-      animation:fadeUp 1.2s ease;
+      display: inline-block;
+      width: 160px;
+      padding: 10px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+      margin: 8px 0;
+      animation: fadeInUp 1.2s ease;
+      position: relative;
+      z-index: 1;
     }
 
-    .btn:hover, .btn-regresar:hover, .story-btn:hover { 
-      background:#ff3388; 
-      transform:scale(1.05); 
+    .btn:hover, .btn-regresar:hover, .story-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(109, 40, 217, 0.3);
     }
 
+    /* Secciones */
     .container, .momentos, .musica, .enamore, .galeria {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      padding:30px 10px;
-      max-width:500px;
-      width:100%;
-      display:none;
-      opacity:0;
-      transition:opacity 0.6s ease,transform 0.6s ease;
+      display: none;
+      opacity: 0;
+      width: 100%;
+      max-width: 550px;
+      padding: 30px 15px;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 0.6s ease;
     }
 
-    .show { display:flex; opacity:1; animation:fadeUp 1s ease forwards; }
-
-    h1.main-title {
-      font-size:50px;
-      text-align:center;
-      text-shadow:0 0 10px rgba(255,0,120,0.4);
-      margin-bottom:30px;
-      color:var(--accent);
-      animation:heartbeat 3s infinite ease-in-out;
+    .show {
+      display: flex;
+      opacity: 1;
+      animation: fadeInUp 1s ease;
     }
 
-    .portrait {
-      width:180px;
-      height:180px;
-      border-radius:50%;
-      background:url('Jennifer.png') center/cover no-repeat;
-      box-shadow:0 10px 40px rgba(255,0,150,0.4);
-      border:5px solid white;
-      margin-bottom:30px;
-      animation:float 4s ease-in-out infinite;
-    }
-
+    /* Textblock */
     .textblock {
-      background:rgba(255,255,255,0.75);
-      padding:25px;
-      border-radius:25px;
-      width:100%;
-      text-align:center;
-      backdrop-filter:blur(10px);
-      box-shadow:0 8px 25px rgba(0,0,0,0.15);
-      margin-bottom:20px;
-      animation:fadeUp 1s ease forwards;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 20px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
     }
 
-    .textblock h2 { color:var(--accent); font-size:24px; margin-bottom:15px; }
-    .textblock p { font-size:16px; line-height:1.6; color:#5a3a3a; }
+    .textblock h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--secondary);
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
 
+    .textblock p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* Momentos */
     .moment-card {
-      background:rgba(255,255,255,0.8);
-      border-radius:20px;
-      box-shadow:0 5px 20px rgba(255,102,170,0.3);
-      padding:20px;
-      text-align:center;
-      margin-bottom:20px;
-      width:100%;
-      animation:fadeUp 1s ease;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      width: 100%;
+      animation: fadeInUp 1s ease;
     }
 
-    .moment-card img { width:100%; border-radius:15px; margin-bottom:10px; }
-    .moment-card h3 { color:var(--accent); font-size:20px; margin-bottom:5px; }
-    .moment-card .fecha { font-size:14px; color:#a35a6a; margin-bottom:10px; }
-    .moment-card p { font-size:15px; color:#5a3a3a; }
+    .moment-card img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 10px;
+    }
 
+    .moment-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--secondary);
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .moment-card .fecha {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .moment-card p {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    /* Canciones */
     .song-card {
-      background:rgba(255,255,255,0.8);
-      border-radius:20px;
-      box-shadow:0 5px 20px rgba(255,102,170,0.3);
-      padding:18px;
-      text-align:center;
-      margin-bottom:16px;
-      width:100%;
-      animation:fadeUp 1s ease;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      width: 100%;
+      animation: fadeInUp 1s ease;
     }
-    .song-card h3 { color:var(--accent); margin-bottom:8px; font-size:18px; }
-    .song-card p { font-size:14px; color:#5a3a3a; line-height:1.5; }
+
+    .song-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--secondary);
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .song-card p {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
 
     iframe {
-      width:100%;
-      height:200px;
-      border:none;
-      border-radius:12px;
-      margin-top:10px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+      width: 100%;
+      height: 200px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    footer {
-      margin-top:10px;
-      color:#a35a6a;
-      font-size:14px;
-      text-align:center;
-      margin-bottom:30px;
-      animation:fadeUp 2s ease;
-    }
-
-    .heart-bg { position:fixed; inset:0; overflow:hidden; z-index:-1; }
-    .floating-heart {
-      position:absolute;
-      opacity:0.9;
-      animation:floatHeart linear forwards;
-      transform:translate(-50%,-50%);
-    }
-
-    @keyframes floatHeart {
-      0% {opacity:0;transform:translate(0,0) rotate(0deg);}
-      10%{opacity:1;}
-      90%{opacity:1;}
-      100% {opacity:0;transform:translate(var(--moveX),var(--moveY)) rotate(360deg);}
-    }
-
-    /* Estilos para Cómo me enamoré - Juego Interactivo */
+    /* Historia interactiva */
     .story-game {
-      background: rgba(255,255,255,0.8);
-      border-radius:20px;
-      box-shadow:0 5px 20px rgba(255,102,170,0.3);
-      padding:20px;
-      width:100%;
-      text-align:center;
-      margin-bottom:20px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     .story-step {
       display: none;
-      animation: fadeUp 1s ease;
+      animation: fadeInUp 1s ease;
     }
 
     .story-step.active {
       display: block;
     }
 
-    .story-step h3 { color:var(--accent); font-size:20px; margin-bottom:10px; }
-    .story-step p { font-size:15px; color:#5a3a3a; margin-bottom:15px; line-height:1.6; }
-
-    .story-btn {
-      display: inline-block;
-      margin: 5px;
+    .story-step h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--secondary);
+      font-size: 1.3rem;
+      margin-bottom: 10px;
     }
 
-    /* Estilos para Galería de Fotos */
+    .story-step p {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    /* Galería */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 10px;
+      gap: 12px;
       width: 100%;
       margin-bottom: 20px;
     }
 
     .gallery-item {
       cursor: pointer;
-      position: relative;
       animation: float 4s ease-in-out infinite;
       animation-delay: calc(var(--index) * 0.2s);
     }
@@ -239,7 +337,7 @@
       width: 100%;
       height: auto;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
     }
 
@@ -247,7 +345,7 @@
       transform: scale(1.05);
     }
 
-    /* Modal para galería con carousel */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -256,8 +354,7 @@
       top: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      background-color: rgba(0,0,0,0.9);
+      background: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
     }
@@ -267,30 +364,23 @@
       width: 90%;
       max-width: 800px;
       max-height: 80vh;
-      margin: auto;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
     }
 
     .slideshow-container {
       width: 100%;
       max-height: 80vh;
       position: relative;
-      display: flex;
       overflow: hidden;
-      touch-action: pan-y pinch-zoom;
     }
 
     .mySlides {
       display: none;
       width: 100%;
-      flex-shrink: 0;
       text-align: center;
       transition: transform 0.3s ease;
-      position: relative;
-      height: 100%;
     }
 
     .mySlides img {
@@ -298,32 +388,26 @@
       max-height: 70vh;
       object-fit: contain;
       border-radius: 10px;
-      position: relative;
-      z-index: 1;
     }
 
     .prev, .next {
       cursor: pointer;
       position: fixed;
       top: 50%;
-      width: auto;
       padding: 16px;
-      margin-top: -50px;
       color: white;
       font-weight: bold;
       font-size: 24px;
       transition: 0.3s ease;
-      border-radius: 0 5px 5px 0;
-      user-select: none;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 2;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
     }
 
     .prev { left: 10px; }
-    .next { right: 10px; border-radius: 5px 0 0 5px; }
+    .next { right: 10px; }
 
     .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
+      background: var(--secondary);
     }
 
     .close {
@@ -334,58 +418,60 @@
       font-size: 40px;
       font-weight: bold;
       transition: 0.3s;
-      z-index: 3;
     }
 
-    .close:hover,
-    .close:focus {
-      color: #bbb;
-      text-decoration: none;
-      cursor: pointer;
+    .close:hover {
+      color: var(--accent);
     }
 
-    @media(max-width:480px){
-      h1.main-title{font-size:36px;}
-      .portrait{width:140px;height:140px;}
-      .textblock h2{font-size:20px;}
-      .textblock p{font-size:14px;}
-      .card-start{width:90%;padding:15px;}
-      .btn,.btn-regresar,.story-btn{width:120px;}
-      .modal-content { max-width: 95%; max-height: 90vh; }
+    /* Footer */
+    footer {
+      margin: 20px 0;
+      color: var(--secondary);
+      font-size: 1rem;
+      text-align: center;
+      animation: fadeInUp 2s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      h1.main-title { font-size: 2.5rem; }
+      .portrait { width: 140px; height: 140px; }
+      .textblock h2 { font-size: 1.4rem; }
+      .textblock p { font-size: 0.9rem; }
+      .card-start { max-width: 90%; }
+      .btn, .btn-regresar, .story-btn { width: 140px; }
+      .modal-content { max-width: 95%; }
       .mySlides img { max-height: 60vh; }
       .prev, .next { font-size: 18px; padding: 12px; }
     }
   </style>
 </head>
 <body>
-  <div class="heart-bg" id="heartBg"></div>
+  <div id="clock"></div>
+  <div class="bg-effects" id="bgEffects"></div>
 
   <div class="card-start" id="cardStart">
-    <h2>📜 Carta para ti 📜</h2>
-    <button id="btnCarta" class="btn">Leer Carta</button>
-    <h2>🎶 Te la dedico 🎶</h2>
-    <button id="btnMusica" class="btn">Escuchar Música</button>
-    <h2>Momentos Vividos</h2>
-    <button id="btnMomentosInicio" class="btn">Ver Momentos</button>
-    <h2>¿Cómo me enamoré?</h2>
-    <button id="btnEnamore" class="btn">Ver Historia</button>
-    <h2>📸 Galería de Fotos 📸</h2>
-    <button id="btnGaleria" class="btn">Ver Galería</button>
-  </div>
-
-  <div class="musica" id="musica">
-    <h1 class="main-title">Música dedicada</h1>
-    <div class="song-card">
-      <h3>🎧 Canción: Ivan Cornejo - Está Dañada</h3>
-      <p>Elegí esta canción para ti porque sé que has pasado por momentos difíciles, pero también sé lo especial que eres. Quiero que recuerdes tu sonrisa, tu alegría, esas cosas que te hacen única. Que sepas que mereces ser feliz, que mereces volver a confiar y disfrutar de la vida… y yo quiero estar ahí para que esos momentos sean aún mejores contigo.</p>
-      <iframe src="https://www.youtube.com/embed/rBLLbgD0FsM" allowfullscreen></iframe>
+    <div>
+      <h2>📜 Carta para ti 📜</h2>
+      <button id="btnCarta" class="btn" aria-label="Leer la carta">Leer Carta</button>
     </div>
-    <div class="song-card">
-      <h3>🎧 Canción: Kevin Kaarl - no me culpes por sentir</h3>
-      <p>He elegido esta canción porque refleja lo que siento en estos momentos: la confusión en mis pensamientos, preguntándome si realmente quieres a alguien como yo o si solo soy yo quien lo siente. También siento que quizás te estoy presionando, aunque tal vez no lo veas así, o tal vez yo no sea lo que buscas.</p>
-      <iframe src="https://www.youtube.com/embed/R0pwwqnGE9A" allowfullscreen></iframe>
+    <div>
+      <h2>🎶 Te la dedico 🎶</h2>
+      <button id="btnMusica" class="btn" aria-label="Escuchar música">Escuchar Música</button>
     </div>
-    <button id="btnVolverMusica" class="btn-regresar">Regresar</button>
+    <div>
+      <h2>Momentos Vividos</h2>
+      <button id="btnMomentosInicio" class="btn" aria-label="Ver momentos vividos">Ver Momentos</button>
+    </div>
+    <div>
+      <h2>¿Cómo me enamoré?</h2>
+      <button id="btnEnamore" class="btn" aria-label="Ver historia de amor">Ver Historia</button>
+    </div>
+    <div>
+      <h2>📸 Galería de Fotos 📸</h2>
+      <button id="btnGaleria" class="btn" aria-label="Ver galería de fotos">Ver Galería</button>
+    </div>
   </div>
 
   <div class="container" id="container">
@@ -402,9 +488,24 @@
       <p>No sé cómo demostrarte que de verdad le importas mucho a mi corazón…</p>
       <p style="margin-top:20px;font-weight:bold;">Att: Ezequías Martínez</p>
       <div style="margin-top:15px;width:120px;height:120px;border-radius:50%;background:url('Ezequias.png') center/cover no-repeat;margin-left:auto;margin-right:auto;box-shadow:0 5px 15px rgba(0,0,0,0.2);animation:float 5s ease-in-out infinite;"></div>
-      <button id="btnRegresar" class="btn-regresar">Regresar</button>
+      <button id="btnRegresar" class="btn-regresar" aria-label="Regresar al menú">Regresar</button>
     </div>
     <footer>— Ezequias 💖 —</footer>
+  </div>
+
+  <div class="musica" id="musica">
+    <h1 class="main-title">Música dedicada</h1>
+    <div class="song-card">
+      <h3>🎧 Canción: Ivan Cornejo - Está Dañada</h3>
+      <p>Elegí esta canción para ti porque sé que has pasado por momentos difíciles, pero también sé lo especial que eres. Quiero que recuerdes tu sonrisa, tu alegría, esas cosas que te hacen única. Que sepas que mereces ser feliz, que mereces volver a confiar y disfrutar de la vida… y yo quiero estar ahí para que esos momentos sean aún mejores contigo.</p>
+      <iframe src="https://www.youtube.com/embed/rBLLbgD0FsM" allowfullscreen></iframe>
+    </div>
+    <div class="song-card">
+      <h3>🎧 Canción: Kevin Kaarl - no me culpes por sentir</h3>
+      <p>He elegido esta canción porque refleja lo que siento en estos momentos: la confusión en mis pensamientos, preguntándome si realmente quieres a alguien como yo o si solo soy yo quien lo siente. También siento que quizás te estoy presionando, aunque tal vez no lo veas así, o tal vez yo no sea lo que buscas.</p>
+      <iframe src="https://www.youtube.com/embed/R0pwwqnGE9A" allowfullscreen></iframe>
+    </div>
+    <button id="btnVolverMusica" class="btn-regresar" aria-label="Regresar al menú">Regresar</button>
   </div>
 
   <div class="momentos" id="momentos">
@@ -427,41 +528,39 @@
       <div class="fecha">📅 3 de octubre de 2025</div>
       <p>Aunque el momento fue chistoso, fue un día en el que me hiciste sentir confiado al enviarme ese chinchón que te diste en la frente. Aún lo recuerdo, y tus ojos siguen siendo hermosos.</p>
     </div>
-    <button id="btnVolverInicio" class="btn-regresar">Regresar</button>
+    <button id="btnVolverInicio" class="btn-regresar" aria-label="Regresar al menú">Regresar</button>
   </div>
 
-  <!-- Apartado Cómo me enamoré - Juego Interactivo -->
   <div class="enamore" id="enamore">
-    <h1 class="main-title">Juego: Cómo me enamoré</h1>
+    <h1 class="main-title">Cómo me enamoré</h1>
     <div class="story-game">
       <div class="story-step active" id="step1">
         <h3>Razones</h3>
         <p>Siento que tienes un corazón muy lindo por tu forma de ser y por cómo te demuestras conmigo, aunque a veces seas un poco dura al expresarte. Me encanta tu mirada, tus ojitos cuando me miras, y tu sonrisa al hablarme o contarme cualquier cosa. Tu timidez te hace aún más especial, y cada vez que estás cerca me haces sentir en paz; al abrazarte o simplemente al saber que estás ahí, mis problemas parecen desvanecerse y me siento tranquilo. Hay algo en ti que me atrae sin saber exactamente qué es, sin razón aparente; cada vez que te veo me siento diferente, y aunque no sé qué es exactamente, todo lo que siento por ti es real.</p>
-        <button class="story-btn" onclick="nextStep(2)">Continuar ❤️</button>
+        <button class="story-btn" onclick="nextStep(2)" aria-label="Continuar al paso 2">Continuar ❤️</button>
       </div>
       <div class="story-step" id="step2">
         <h3>Por qué</h3>
         <p>Mis sentimientos crecieron porque me mostraste interés; no sé exactamente qué decirte, como cuando te expresaste nerviosa o tímida. Te he abierto mi corazón; puedes tomarlo, y si no te corresponde, simplemente has que corresponda 😁👍. Y aunque me contaste que te entregaste completamente a otra persona emocionalmente, siento que mereces ser amada, cuidada y respetada. Quiero ser esa persona que poco a poco te ame, que te quiera cada día a su lado y que te demuestre un interés real.</p>
-        <button class="story-btn" onclick="prevStep(1)">Anterior</button>
-        <button class="story-btn" onclick="nextStep(3)">Siguiente ✨</button>
+        <button class="story-btn" onclick="prevStep(1)" aria-label="Volver al paso 1">Anterior</button>
+        <button class="story-btn" onclick="nextStep(3)" aria-label="Continuar al paso 3">Siguiente ✨</button>
       </div>
       <div class="story-step" id="step3">
-        <h3>Tu Ojitos y Sonrisa</h3>
-        <p>Tus ojitos y tu sonrisa… me enamoré completamente de ellos. Me encanta cómo me miras y sonríes al mismo tiempo. También admiro mucho cuando sonríes y me hablas; tus pupilas siguen vivas, y quiero ayudarte a mantenerlas siempre así, llenas de vida y alegría. Quiero descubrir ese paraíso que hay en tu corazón, arreglar los momentos mal vividos dentro de ti y estudiarte, conocer cada parte de ti poco a poco para entenderte y cuidarte como te mereces.</p>
-        <button class="story-btn" onclick="prevStep(2)">Anterior</button>
-        <button class="story-btn" onclick="nextStep(4)">Siguiente 🌟</button>
+        <h3>Tus Ojitos y Sonrisa</h3>
+        <p>Tus ojitos y tu sonrisa… me enamoré completamente de ellos. Me encanta cómo me miras y sonríes al mismo tiempo. También admiro mucho cuando sonríes y me hablas; tus pupilas siguen vivas, y quiero ayudarte a mantenerlas siempre así, llenas de vida y alegría. Quiero descubrir ese paraíso que hay en tu corazón, arreglar los momentos mal vividos dentro de ti y estudiarte, quiero saber que piensas, conocer cada parte de ti poco a poco para entenderte y cuidarte como te mereces.</p>
+        <button class="story-btn" onclick="prevStep(2)" aria-label="Volver al paso 2">Anterior</button>
+        <button class="story-btn" onclick="nextStep(4)" aria-label="Continuar al paso 4">Siguiente 🌟</button>
       </div>
       <div class="story-step" id="step4">
         <h3>Mi promesa</h3>
         <p>No todos los días son buenos, ni todos los días son de color azul, pero prometo que si alguna vez llega a pasar algo, siempre estaré ahí para ti en lo que sea posible. Siempre te llevo presente en mis pensamientos, así que eso no hace falta prometerlo; siempre será así. Prometo que todo lo que vivamos será bonito, que no habrá desinterés ni desconfianza, porque realmente te quiero muchísimo.</p>
-        <button class="story-btn" onclick="prevStep(3)">Anterior</button>
-        <button class="story-btn btn-regresar" onclick="returnToMain()">Regresar</button>
+        <button class="story-btn" onclick="prevStep(3)" aria-label="Volver al paso 3">Anterior</button>
+        <button class="story-btn btn-regresar" onclick="returnToMain()" aria-label="Regresar al menú">Regresar</button>
       </div>
     </div>
-    <button id="btnVolverEnamore" class="btn-regresar">Regresar</button>
+    <button id="btnVolverEnamore" class="btn-regresar" aria-label="Regresar al menú">Regresar</button>
   </div>
 
-  <!-- Apartado Galería de Fotos -->
   <div class="galeria" id="galeria">
     <h1 class="main-title">Galería de Fotos</h1>
     <div class="gallery-grid" id="galleryGrid">
@@ -481,15 +580,14 @@
         <img src="Ezequias.png" alt="Ezequias">
       </div>
       <div class="gallery-item" data-index="5" onclick="openModal(5)" style="--index:5">
-        <img src="cartajennifer.png" alt="cartajennifer">
+        <img src="cartajennifer.png" alt="Carta Jennifer">
       </div>
     </div>
-    <button id="btnVolverGaleria" class="btn-regresar">Regresar</button>
+    <button id="btnVolverGaleria" class="btn-regresar" aria-label="Regresar al menú">Regresar</button>
   </div>
 
-  <!-- Modal con Carousel -->
   <div id="photoModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
+    <span class="close" onclick="closeModal()" aria-label="Cerrar galería">&times;</span>
     <div class="modal-content">
       <div class="slideshow-container" id="slideshowContainer">
         <div class="mySlides" data-index="0">
@@ -508,11 +606,11 @@
           <img src="Ezequias.png" alt="Ezequias">
         </div>
         <div class="mySlides" data-index="5">
-          <img src="cartajennifer.png" alt="cartajennifer">
+          <img src="cartajennifer.png" alt="Carta Jennifer">
         </div>
       </div>
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <a class="prev" onclick="plusSlides(-1)" aria-label="Imagen anterior">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)" aria-label="Imagen siguiente">&#10095;</a>
     </div>
   </div>
 
@@ -525,8 +623,9 @@
     const musica = document.getElementById('musica');
     const enamore = document.getElementById('enamore');
     const galeria = document.getElementById('galeria');
-    const heartBg = document.getElementById('heartBg');
+    const bgEffects = document.getElementById('bgEffects');
     const clickSound = document.getElementById('clickSound');
+    const clock = document.getElementById('clock');
 
     const btnCarta = document.getElementById('btnCarta');
     const btnMusica = document.getElementById('btnMusica');
@@ -539,7 +638,10 @@
     const btnGaleria = document.getElementById('btnGaleria');
     const btnVolverGaleria = document.getElementById('btnVolverGaleria');
 
-    const playClick = () => { clickSound.currentTime = 0; clickSound.play(); };
+    const playClick = () => {
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
+    };
 
     [btnCarta, btnMusica, btnRegresar, btnMomentosInicio, btnVolverInicio, btnVolverMusica, btnEnamore, btnVolverEnamore, btnGaleria, btnVolverGaleria].forEach(b => {
       if (b) b.addEventListener('click', playClick);
@@ -548,91 +650,183 @@
     btnCarta.addEventListener('click', () => {
       cardStart.style.opacity = 0;
       cardStart.style.transform = "scale(0.95)";
-      setTimeout(() => { cardStart.style.display = 'none'; container.classList.add('show'); }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'none';
+        container.classList.add('show');
+      }, 500);
     });
 
     btnRegresar.addEventListener('click', () => {
       container.classList.remove('show');
-      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 0;
+        cardStart.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          cardStart.style.opacity = 1;
+          cardStart.style.transform = "scale(1)";
+          cardStart.style.animation = 'fadeInUp 1s ease';
+        }, 50);
+      }, 500);
     });
 
     btnMomentosInicio.addEventListener('click', () => {
       cardStart.style.opacity = 0;
       cardStart.style.transform = "scale(0.95)";
-      setTimeout(() => { cardStart.style.display = 'none'; momentos.classList.add('show'); }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'none';
+        momentos.classList.add('show');
+      }, 500);
     });
 
     btnVolverInicio.addEventListener('click', () => {
       momentos.classList.remove('show');
-      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 0;
+        cardStart.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          cardStart.style.opacity = 1;
+          cardStart.style.transform = "scale(1)";
+          cardStart.style.animation = 'fadeInUp 1s ease';
+        }, 50);
+      }, 500);
     });
 
     btnMusica.addEventListener('click', () => {
       cardStart.style.opacity = 0;
       cardStart.style.transform = "scale(0.95)";
-      setTimeout(() => { cardStart.style.display = 'none'; musica.classList.add('show'); }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'none';
+        musica.classList.add('show');
+      }, 500);
     });
 
     btnVolverMusica.addEventListener('click', () => {
       musica.classList.remove('show');
-      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 0;
+        cardStart.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          cardStart.style.opacity = 1;
+          cardStart.style.transform = "scale(1)";
+          cardStart.style.animation = 'fadeInUp 1s ease';
+        }, 50);
+      }, 500);
     });
 
     btnEnamore.addEventListener('click', () => {
       cardStart.style.opacity = 0;
       cardStart.style.transform = "scale(0.95)";
-      setTimeout(() => { 
-        cardStart.style.display = 'none'; 
-        enamore.classList.add('show'); 
+      setTimeout(() => {
+        cardStart.style.display = 'none';
+        enamore.classList.add('show');
         resetStory();
       }, 500);
     });
 
     btnVolverEnamore.addEventListener('click', () => {
       enamore.classList.remove('show');
-      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 0;
+        cardStart.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          cardStart.style.opacity = 1;
+          cardStart.style.transform = "scale(1)";
+          cardStart.style.animation = 'fadeInUp 1s ease';
+        }, 50);
+      }, 500);
     });
 
     btnGaleria.addEventListener('click', () => {
       cardStart.style.opacity = 0;
       cardStart.style.transform = "scale(0.95)";
-      setTimeout(() => { cardStart.style.display = 'none'; galeria.classList.add('show'); }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'none';
+        galeria.classList.add('show');
+      }, 500);
     });
 
     btnVolverGaleria.addEventListener('click', () => {
       galeria.classList.remove('show');
-      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 0;
+        cardStart.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          cardStart.style.opacity = 1;
+          cardStart.style.transform = "scale(1)";
+          cardStart.style.animation = 'fadeInUp 1s ease';
+        }, 50);
+      }, 500);
     });
 
-    // Corazones flotando
+    // Partículas de fondo y corazones
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.animationDuration = 10 + Math.random() * 10 + 's';
+      bgEffects.appendChild(particle);
+      setTimeout(() => particle.remove(), 20000);
+    }
+
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('floating-heart');
-      heart.innerText = ['💖', '💘', '💞', '❤️'][Math.floor(Math.random() * 4)];
-      const startX = Math.random() > 0.5 ? '-10vw' : '110vw';
-      const endX = startX === '-10vw' ? '110vw' : '-10vw';
-      const startY = Math.random() * 100 + 'vh';
-      const endY = Math.random() * 100 + 'vh';
-      heart.style.left = startX;
-      heart.style.top = startY;
-      heart.style.setProperty('--moveX', `calc(${endX} - ${startX})`);
-      heart.style.setProperty('--moveY', `calc(${endY} - ${startY})`);
-      heart.style.fontSize = 15 + Math.random() * 25 + 'px';
-      heart.style.animationDuration = 6 + Math.random() * 6 + 's';
-      heartBg.appendChild(heart);
-      setTimeout(() => heart.remove(), 12000);
+      heart.innerText = ['❤️', '💕', '💖', '💞'][Math.floor(Math.random() * 4)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      const side = Math.floor(Math.random() * 4);
+      let xEnd, yEnd;
+      switch (side) {
+        case 0: // Arriba
+          heart.style.left = Math.random() * 100 + 'vw';
+          heart.style.top = '-5%';
+          xEnd = (Math.random() - 0.5) * 200 + 'vw';
+          yEnd = '110vh';
+          break;
+        case 1: // Derecha
+          heart.style.right = '-5%';
+          heart.style.top = Math.random() * 100 + 'vh';
+          xEnd = '-110vw';
+          yEnd = (Math.random() - 0.5) * 200 + 'vh';
+          break;
+        case 2: // Abajo
+          heart.style.left = Math.random() * 100 + 'vw';
+          heart.style.top = '105%';
+          xEnd = (Math.random() - 0.5) * 200 + 'vw';
+          yEnd = '-110vh';
+          break;
+        case 3: // Izquierda
+          heart.style.left = '-5%';
+          heart.style.top = Math.random() * 100 + 'vh';
+          xEnd = '110vw';
+          yEnd = (Math.random() - 0.5) * 200 + 'vh';
+          break;
+      }
+      heart.style.setProperty('--x-end', xEnd);
+      heart.style.setProperty('--y-end', yEnd);
+      heart.style.fontSize = 15 + Math.random() * 20 + 'px';
+      heart.style.animationDuration = 6 + Math.random() * 4 + 's';
+      bgEffects.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
     }
-    setInterval(createHeart, 700);
+
+    setInterval(createParticle, 600);
+    setInterval(createHeart, 400);
 
     // Modal y Carousel para galería
     let slideIndex = 1;
-    let galleryImages = [
+    const galleryImages = [
       { src: 'PrimerMensaje.png', alt: 'Primer Mensaje' },
       { src: 'flores.png', alt: 'Flores Amarillas' },
       { src: 'ojos.png', alt: 'Ojos Hermosos' },
       { src: 'Jennifer.png', alt: 'Jennifer' },
       { src: 'Ezequias.png', alt: 'Ezequias' },
-      { src: 'PrimerMensaje.png', alt: 'Otro Momento' }
+      { src: 'cartajennifer.png', alt: 'Carta Jennifer' }
     ];
 
     function openModal(n) {
@@ -643,8 +837,7 @@
     }
 
     function closeModal() {
-      const modal = document.getElementById('photoModal');
-      modal.style.display = 'none';
+      document.getElementById('photoModal').style.display = 'none';
     }
 
     function plusSlides(n) {
@@ -653,9 +846,9 @@
     }
 
     function showSlides(n) {
-      let slides = document.getElementsByClassName("mySlides");
-      if (n > slides.length) { slideIndex = 1 }
-      if (n < 1) { slideIndex = slides.length }
+      const slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) { slideIndex = 1; }
+      if (n < 1) { slideIndex = slides.length; }
       for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
         slides[i].style.transform = "translateX(0)";
@@ -663,10 +856,8 @@
       slides[slideIndex - 1].style.display = "block";
     }
 
-    // Swipe Functionality
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let isDragging = false;
+    // Swipe para galería
+    let touchStartX = 0, touchEndX = 0, isDragging = false;
 
     function setupSwipe() {
       const slideshowContainer = document.getElementById('slideshowContainer');
@@ -688,12 +879,9 @@
         if (isDragging) {
           touchEndX = e.changedTouches[0].screenX;
           const diffX = touchStartX - touchEndX;
-          if (Math.abs(diffX) > 50) { // Minimum swipe distance
-            if (diffX > 0) {
-              plusSlides(1); // Swipe left -> next
-            } else {
-              plusSlides(-1); // Swipe right -> previous
-            }
+          if (Math.abs(diffX) > 50) {
+            if (diffX > 0) plusSlides(1);
+            else plusSlides(-1);
           } else {
             const slide = document.getElementsByClassName("mySlides")[slideIndex - 1];
             slide.style.transform = "translateX(0)";
@@ -723,9 +911,36 @@
 
     function returnToMain() {
       enamore.classList.remove('show');
-      setTimeout(() => { cardStart.style.display = 'flex'; cardStart.style.opacity = 1; cardStart.style.transform = "scale(1)"; }, 500);
+      setTimeout(() => {
+        cardStart.style.display = 'flex';
+        cardStart.style.opacity = 0;
+        cardStart.style.transform = "scale(0.95)";
+        setTimeout(() => {
+          cardStart.style.opacity = 1;
+          cardStart.style.transform = "scale(1)";
+          cardStart.style.animation = 'fadeInUp 1s ease';
+        }, 50);
+      }, 500);
       playClick();
     }
+
+    // Reloj simple
+    function updateClock() {
+      const now = new Date();
+      const options = { timeZone: 'America/Puerto_Rico', hour: '2-digit', minute: '2-digit', hour12: true };
+      const time = now.toLocaleTimeString('en-US', options).toUpperCase();
+      clock.textContent = time;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // Inicializa el reloj
+
+    // Teclado para modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') plusSlides(-1);
+      if (e.key === 'ArrowRight') plusSlides(1);
+    });
   </script>
 </body>
 </html>
